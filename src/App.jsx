@@ -700,23 +700,6 @@ function insFormula() {
 function openMo(id) { var el = document.getElementById(id); if (el) el.classList.add('open'); }
 function closeMo(id) { var el = document.getElementById(id); if (el) el.classList.remove('open'); }
 
-
-  });
-  // Enter to send
-  var chatPairs = [
-    ['d-chat-inp', function() { dChatSend(); }],
-    ['s-inp-studio', function() { sChatSend('studio'); }],
-    ['s-inp-esercizi', function() { sChatSend('esercizi'); }],
-    ['s-inp-ripasso', function() { sChatSend('ripasso'); }]
-  ];
-  chatPairs.forEach(function(pair) {
-    var el = document.getElementById(pair[0]);
-    if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); pair[1](); } });
-  });
-  startTimer();
-  renderF(fVal);
-});
-
 // ── ONBOARDING DOCENTE ──
 var obSelected = 0;
 var obClasses = [
@@ -881,9 +864,9 @@ export default function YourBest() {
     <div className="ah2">Accedi al tuo account</div>
     <div className="albl">Seleziona ruolo</div>
     <div className="rchips" id="login-chips">
-      <div className="rc on" onClick={() => { setLoginRole(this,'doc') }}><span className="rci">👨‍🏫</span>Docente</div>
-      <div className="rc" onClick={() => { setLoginRole(this,'stu') }}><span className="rci">👨‍🎓</span>Studente</div>
-      <div className="rc" onClick={() => { setLoginRole(this,'ist') }}><span className="rci">🏫</span>Istituzione</div>
+      <div className="rc on" onClick={(e) => { setLoginRole(e.currentTarget,'doc') }}><span className="rci">👨‍🏫</span>Docente</div>
+      <div className="rc" onClick={(e) => { setLoginRole(e.currentTarget,'stu') }}><span className="rci">👨‍🎓</span>Studente</div>
+      <div className="rc" onClick={(e) => { setLoginRole(e.currentTarget,'ist') }}><span className="rci">🏫</span>Istituzione</div>
     </div>
     <div className="albl">Email</div>
     <input className="ainp" id="l-email" type="email" placeholder="email@liceo.it" value="giulia.rossi@liceo.it"/>
@@ -905,9 +888,9 @@ export default function YourBest() {
     <div className="ah1">Crea il tuo account</div>
     <div className="ah2" style={{marginBottom: "20px"}}>Seleziona il ruolo per personalizzare la registrazione</div>
     <div className="rchips" id="reg-chips">
-      <div className="rc on" onClick={() => { setRegRole(this,'stu') }}><span className="rci">👨‍🎓</span>Studente</div>
-      <div className="rc" onClick={() => { setRegRole(this,'doc') }}><span className="rci">👨‍🏫</span>Docente</div>
-      <div className="rc" onClick={() => { setRegRole(this,'ist') }}><span className="rci">🏫</span>Istituzione</div>
+      <div className="rc on" onClick={(e) => { setRegRole(e.currentTarget,'stu') }}><span className="rci">👨‍🎓</span>Studente</div>
+      <div className="rc" onClick={(e) => { setRegRole(e.currentTarget,'doc') }}><span className="rci">👨‍🏫</span>Docente</div>
+      <div className="rc" onClick={(e) => { setRegRole(e.currentTarget,'ist') }}><span className="rci">🏫</span>Istituzione</div>
     </div>
     
     <div id="rf-stu" className="regf on">
@@ -981,11 +964,11 @@ export default function YourBest() {
       </div>
       <div className="albl">Materie insegnate</div>
       <div className="msopts">
-        <div className="msopt on" onClick={() => { this.classList.toggle('on') }}>Matematica</div>
-        <div className="msopt" onClick={() => { this.classList.toggle('on') }}>Fisica</div>
-        <div className="msopt" onClick={() => { this.classList.toggle('on') }}>Italiano</div>
-        <div className="msopt" onClick={() => { this.classList.toggle('on') }}>Storia</div>
-        <div className="msopt" onClick={() => { this.classList.toggle('on') }}>Scienze</div>
+        <div className="msopt on" onClick={(e) => { e.currentTarget.classList.toggle('on') }}>Matematica</div>
+        <div className="msopt" onClick={(e) => { e.currentTarget.classList.toggle('on') }}>Fisica</div>
+        <div className="msopt" onClick={(e) => { e.currentTarget.classList.toggle('on') }}>Italiano</div>
+        <div className="msopt" onClick={(e) => { e.currentTarget.classList.toggle('on') }}>Storia</div>
+        <div className="msopt" onClick={(e) => { e.currentTarget.classList.toggle('on') }}>Scienze</div>
       </div>
       <div className="rgsec">Credenziali di accesso</div>
       <div className="grid2">
@@ -1172,11 +1155,11 @@ export default function YourBest() {
                   <div className="tar" onClick={() => { togArg('dta-0') }}><span>📂</span><span className="tan">Equazioni e sistemi</span><span className="tarr">▶</span></div>
                   <div className="tsubs">
                     <div className="tsb on">🔵 Eq. di 2° grado</div>
-                    <div className="tle dn" onClick={() => { dSelLes(this,'Lezione 1 — Introduzione') }}>↳ Lez.1 — Intro ✅</div>
-                    <div className="tle on" onClick={() => { dSelLes(this,'Lezione 2 — Il discriminante') }}>↳ Lez.2 — Il discriminante 🔵</div>
-                    <div className="tle" onClick={() => { dSelLes(this,'Lezione 3 — Formula completa') }}>↳ Lez.3 — Formula ⚪</div>
+                    <div className="tle dn" onClick={(e) => { dSelLes(e.currentTarget,'Lezione 1 — Introduzione') }}>↳ Lez.1 — Intro ✅</div>
+                    <div className="tle on" onClick={(e) => { dSelLes(e.currentTarget,'Lezione 2 — Il discriminante') }}>↳ Lez.2 — Il discriminante 🔵</div>
+                    <div className="tle" onClick={(e) => { dSelLes(e.currentTarget,'Lezione 3 — Formula completa') }}>↳ Lez.3 — Formula ⚪</div>
                     <div className="tsb">⚪ Sistemi lineari</div>
-                    <div className="tle" onClick={() => { dSelLes(this,'Lezione 1 — Sostituzione') }}>↳ Lez.1 — Sostituzione ⚪</div>
+                    <div className="tle" onClick={(e) => { dSelLes(e.currentTarget,'Lezione 1 — Sostituzione') }}>↳ Lez.1 — Sostituzione ⚪</div>
                   </div>
                 </div>
                 <div className="ta2" id="dta-1">
@@ -1194,7 +1177,7 @@ export default function YourBest() {
                   <div style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 0", borderBottom: "1px solid var(--bor)", fontSize: "11px"}}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FEE2E2", color: "#991B1B", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PDF</div><span style={{flex: 1}}>Cap. 4 — Il discriminante.pdf</span><span className="tag tg" style={{fontSize: "9px"}}>AI pronto</span></div>
                   <div style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 0", borderBottom: "1px solid var(--bor)", fontSize: "11px"}}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FFFBEB", color: "#92400E", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PPT</div><span style={{flex: 1}}>Slide Lezione 2.pptx</span><span className="tag tg" style={{fontSize: "9px"}}>AI pronto</span></div>
                   <div style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 0", fontSize: "11px"}}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#D1FAE5", color: "#065F46", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>VID</div><span style={{flex: 1}}>Video-lezione.mp4</span><span className="tag tw" style={{fontSize: "9px"}}>In elaboraz.</span></div>
-                  <div style={{marginTop: "9px", border: "2px dashed var(--bor)", borderRadius: "8px", padding: "11px", textAlign: "center", cursor: "pointer"}} onMouseOver={() => { this.style.borderColor='var(--blue)' }} onMouseOut={() => { this.style.borderColor='var(--bor)' }}><div style={{fontSize: "15px", marginBottom: "2px"}}>📤</div><div style={{fontSize: "11px", fontWeight: 600, color: "var(--navy)"}}>Carica materiale</div></div>
+                  <div style={{marginTop: "9px", border: "2px dashed var(--bor)", borderRadius: "8px", padding: "11px", textAlign: "center", cursor: "pointer"}} onMouseOver={(e) => { e.currentTarget.style.borderColor='var(--blue)' }} onMouseOut={(e) => { e.currentTarget.style.borderColor='var(--bor)' }}><div style={{fontSize: "15px", marginBottom: "2px"}}>📤</div><div style={{fontSize: "11px", fontWeight: 600, color: "var(--navy)"}}>Carica materiale</div></div>
                   <div style={{background: "linear-gradient(135deg,var(--navy),#1A3A5C)", borderRadius: "10px", padding: "11px 13px", display: "flex", alignItems: "center", gap: "10px", marginTop: "9px", cursor: "pointer"}} onClick={() => { openLesChat() }}>
                     <div style={{fontSize: "18px"}}>🤖</div>
                     <div style={{flex: 1}}><div style={{fontSize: "12px", fontWeight: 700, color: "#fff", marginBottom: "1px"}}>Creiamo una lezione insieme</div><div style={{fontSize: "10px", color: "rgba(255,255,255,.42)"}}>L'AI ti aiuta a strutturare contenuti ed esempi</div></div>
@@ -1237,11 +1220,11 @@ export default function YourBest() {
                   <div className="tar" onClick={() => { togArg('dea-0') }}><span>📐</span><span className="tan">Eq. 2° grado</span><span className="tarr">▶</span></div>
                   <div className="tsubs">
                     <div className="tsb on">🔵 Il discriminante</div>
-                    <div className="tex on" onClick={() => { dSelEx(this,0) }}><div className="texn tnok">1</div><div className="texnm">Formula risolutiva</div><span style={{fontSize: "10px", color: "var(--mu)"}}>5/5</span></div>
-                    <div className="tex" onClick={() => { dSelEx(this,1) }}><div className="texn tnok">2</div><div className="texnm">Analisi discriminante</div><span style={{fontSize: "10px", color: "var(--mu)"}}>4/5</span></div>
-                    <div className="tex" onClick={() => { dSelEx(this,2) }}><div className="texn tner">3</div><div className="texnm">Eq. con frazioni</div><span style={{fontSize: "10px", color: "var(--mu)"}}>3/5</span></div>
+                    <div className="tex on" onClick={(e) => { dSelEx(e.currentTarget,0) }}><div className="texn tnok">1</div><div className="texnm">Formula risolutiva</div><span style={{fontSize: "10px", color: "var(--mu)"}}>5/5</span></div>
+                    <div className="tex" onClick={(e) => { dSelEx(e.currentTarget,1) }}><div className="texn tnok">2</div><div className="texnm">Analisi discriminante</div><span style={{fontSize: "10px", color: "var(--mu)"}}>4/5</span></div>
+                    <div className="tex" onClick={(e) => { dSelEx(e.currentTarget,2) }}><div className="texn tner">3</div><div className="texnm">Eq. con frazioni</div><span style={{fontSize: "10px", color: "var(--mu)"}}>3/5</span></div>
                     <div className="tsb">⚪ Sistemi lineari</div>
-                    <div className="tex" onClick={() => { dSelEx(this,3) }}><div className="texn tntd">4</div><div className="texnm">Sostituzione</div><span style={{fontSize: "10px", color: "var(--mu)"}}>bozza</span></div>
+                    <div className="tex" onClick={(e) => { dSelEx(e.currentTarget,3) }}><div className="texn tntd">4</div><div className="texnm">Sostituzione</div><span style={{fontSize: "10px", color: "var(--mu)"}}>bozza</span></div>
                   </div>
                 </div>
               </div>
@@ -1419,7 +1402,7 @@ export default function YourBest() {
       </div>
     </div>
   </div>
-  <div className="popup" id="pop-doc" onClick={() => { this.classList.add('off') }}><div className="poptop"><span className="poptit">🤖 Analisi AI disponibile</span><button className="popx">✕</button></div><div className="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div></div>
+  <div className="popup" id="pop-doc" onClick={(e) => { e.currentTarget.classList.add('off') }}><div className="poptop"><span className="poptit">🤖 Analisi AI disponibile</span><button className="popx">✕</button></div><div className="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div></div>
 </div>
 
 <div id="pg-stu" className="pg">
@@ -1477,7 +1460,7 @@ export default function YourBest() {
           </div>
           <div style={{fontSize: "12px", fontWeight: 700, color: "var(--navy)", marginBottom: "10px"}}>Le tue materie</div>
           <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px"}}>
-            <div style={{background: "#fff", borderRadius: "11px", border: "1.5px solid var(--bor)", padding: "13px", cursor: "pointer", transition: ".2s", position: "relative", overflow: "hidden"}} onMouseOver={() => { this.style.transform='translateY(-2px)' }} onMouseOut={() => { this.style.transform='' }} onClick={() => { setSMat('📐 Matematica');sV('studio') }}>
+            <div style={{background: "#fff", borderRadius: "11px", border: "1.5px solid var(--bor)", padding: "13px", cursor: "pointer", transition: ".2s", position: "relative", overflow: "hidden"}} onMouseOver={(e) => { e.currentTarget.style.transform='translateY(-2px)' }} onMouseOut={(e) => { e.currentTarget.style.transform='' }} onClick={() => { setSMat('📐 Matematica');sV('studio') }}>
               <div style={{position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(90deg,#1E6BFF,#4D8DFF)"}}></div>
               <div style={{fontSize: "20px", marginBottom: "5px"}}>📐</div>
               <div style={{fontSize: "12px", fontWeight: 700, marginBottom: "2px"}}>Matematica</div>
@@ -1485,7 +1468,7 @@ export default function YourBest() {
               <div style={{height: "4px", background: "var(--bor)", borderRadius: "2px", marginBottom: "3px"}}><div style={{height: "100%", width: "58%", background: "#1E6BFF", borderRadius: "2px"}}></div></div>
               <div style={{fontSize: "9px", color: "var(--mu)"}}>Eq. 2° grado · 58%</div>
             </div>
-            <div style={{background: "#fff", borderRadius: "11px", border: "1.5px solid var(--bor)", padding: "13px", cursor: "pointer", transition: ".2s", position: "relative", overflow: "hidden"}} onMouseOver={() => { this.style.transform='translateY(-2px)' }} onMouseOut={() => { this.style.transform='' }} onClick={() => { setSMat('⚡ Fisica');sV('studio') }}>
+            <div style={{background: "#fff", borderRadius: "11px", border: "1.5px solid var(--bor)", padding: "13px", cursor: "pointer", transition: ".2s", position: "relative", overflow: "hidden"}} onMouseOver={(e) => { e.currentTarget.style.transform='translateY(-2px)' }} onMouseOut={(e) => { e.currentTarget.style.transform='' }} onClick={() => { setSMat('⚡ Fisica');sV('studio') }}>
               <div style={{position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: "linear-gradient(90deg,#10B981,#059669)"}}></div>
               <div style={{fontSize: "20px", marginBottom: "5px"}}>⚡</div>
               <div style={{fontSize: "12px", fontWeight: 700, marginBottom: "2px"}}>Fisica</div>
@@ -1503,15 +1486,15 @@ export default function YourBest() {
             <div className="tp">
               <div className="tph"><div className="tpt">Programma</div><span className="tag ta" style={{fontSize: "9px"}}>In corso</span></div>
               <div className="tpb">
-                <div className="ta2" id="sta-0"><div className="tar" onClick={() => { togArg('sta-0') }}><span>✅</span><span className="tan" style={{color: "#065F46"}}>Eq. di 1° grado</span><span className="tarr">▶</span></div><div className="tsubs"><div className="tsb dn">✅ Forma normale</div><div className="tle dn" onClick={() => { sSelLes(this,'Lezione 1 — Forma normale') }}>↳ Lez.1 ✅</div><div className="tsb dn">✅ Soluzioni</div><div className="tle dn" onClick={() => { sSelLes(this,'Lezione 2 — Soluzioni') }}>↳ Lez.2 ✅</div></div></div>
+                <div className="ta2" id="sta-0"><div className="tar" onClick={() => { togArg('sta-0') }}><span>✅</span><span className="tan" style={{color: "#065F46"}}>Eq. di 1° grado</span><span className="tarr">▶</span></div><div className="tsubs"><div className="tsb dn">✅ Forma normale</div><div className="tle dn" onClick={(e) => { sSelLes(e.currentTarget,'Lezione 1 — Forma normale') }}>↳ Lez.1 ✅</div><div className="tsb dn">✅ Soluzioni</div><div className="tle dn" onClick={(e) => { sSelLes(e.currentTarget,'Lezione 2 — Soluzioni') }}>↳ Lez.2 ✅</div></div></div>
                 <div className="ta2 open" id="sta-1">
                   <div className="tar" onClick={() => { togArg('sta-1') }}><span>🔵</span><span className="tan">Eq. di 2° grado</span><span className="tarr">▶</span></div>
                   <div className="tsubs">
                     <div className="tsb dn">✅ Introduzione</div>
-                    <div className="tle dn" onClick={() => { sSelLes(this,'Lezione 1 — Introduzione') }}>↳ Lez.1 — Intro ✅</div>
+                    <div className="tle dn" onClick={(e) => { sSelLes(e.currentTarget,'Lezione 1 — Introduzione') }}>↳ Lez.1 — Intro ✅</div>
                     <div className="tsb on">🔵 Il discriminante</div>
-                    <div className="tle on" onClick={() => { sSelLes(this,'Lezione 2 — Il discriminante') }}>↳ Lez.2 — Il discriminante 🔵</div>
-                    <div className="tle" onClick={() => { sSelLes(this,'Lezione 3 — Formula completa') }}>↳ Lez.3 — Formula ⚪</div>
+                    <div className="tle on" onClick={(e) => { sSelLes(e.currentTarget,'Lezione 2 — Il discriminante') }}>↳ Lez.2 — Il discriminante 🔵</div>
+                    <div className="tle" onClick={(e) => { sSelLes(e.currentTarget,'Lezione 3 — Formula completa') }}>↳ Lez.3 — Formula ⚪</div>
                     <div className="tsb">⚪ Sistemi lineari</div>
                     <div className="tle lk">↳ Lez.4 — Sostituzione 🔒</div>
                   </div>
@@ -1524,9 +1507,9 @@ export default function YourBest() {
                 <div className="ch"><span>📖</span><div style={{flex: 1}}><div className="ct" id="s-les-t">Lezione 2 — Il discriminante</div><div style={{fontSize: "10px", color: "var(--mu)"}}>Prof. Carla Bianchi · 19 mar 2026</div></div><span className="tag ta mla">In corso</span></div>
                 <div style={{padding: "10px 14px"}}>
                   <div style={{fontSize: "10px", fontWeight: 700, color: "var(--mu)", textTransform: "uppercase", letterSpacing: ".5px", marginBottom: "5px"}}>Materiali — clicca per studiare con l'AI</div>
-                  <div id="mat-pdf" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", borderBottom: "1px solid var(--bor)", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={() => { this.style.background='var(--sur)' }} onMouseOut={() => { this.style.background='' }} onClick={() => { sSelDoc(this,'Cap. 4 — Il discriminante.pdf') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FEE2E2", color: "#991B1B", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PDF</div><span style={{flex: 1}}>Cap. 4 — Il discriminante.pdf</span><span style={{fontSize: "11px"}}>⬇</span></div>
-                  <div id="mat-ppt" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", borderBottom: "1px solid var(--bor)", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={() => { this.style.background='var(--sur)' }} onMouseOut={() => { this.style.background='' }} onClick={() => { sSelDoc(this,'Slide Lezione 2.pptx') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FFFBEB", color: "#92400E", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PPT</div><span style={{flex: 1}}>Slide Lezione 2.pptx</span><span style={{fontSize: "11px"}}>⬇</span></div>
-                  <div id="mat-vid" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={() => { this.style.background='var(--sur)' }} onMouseOut={() => { this.style.background='' }} onClick={() => { sSelDoc(this,'Video-lezione.mp4') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#D1FAE5", color: "#065F46", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>VID</div><span style={{flex: 1}}>Video-lezione.mp4</span><span style={{fontSize: "11px"}}>▶️</span></div>
+                  <div id="mat-pdf" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", borderBottom: "1px solid var(--bor)", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={(e) => { e.currentTarget.style.background='var(--sur)' }} onMouseOut={(e) => { e.currentTarget.style.background='' }} onClick={(e) => { sSelDoc(e.currentTarget,'Cap. 4 — Il discriminante.pdf') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FEE2E2", color: "#991B1B", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PDF</div><span style={{flex: 1}}>Cap. 4 — Il discriminante.pdf</span><span style={{fontSize: "11px"}}>⬇</span></div>
+                  <div id="mat-ppt" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", borderBottom: "1px solid var(--bor)", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={(e) => { e.currentTarget.style.background='var(--sur)' }} onMouseOut={(e) => { e.currentTarget.style.background='' }} onClick={(e) => { sSelDoc(e.currentTarget,'Slide Lezione 2.pptx') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#FFFBEB", color: "#92400E", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>PPT</div><span style={{flex: 1}}>Slide Lezione 2.pptx</span><span style={{fontSize: "11px"}}>⬇</span></div>
+                  <div id="mat-vid" style={{display: "flex", alignItems: "center", gap: "7px", padding: "6px 8px", fontSize: "11px", cursor: "pointer", borderRadius: "6px", transition: ".15s"}} onMouseOver={(e) => { e.currentTarget.style.background='var(--sur)' }} onMouseOut={(e) => { e.currentTarget.style.background='' }} onClick={(e) => { sSelDoc(e.currentTarget,'Video-lezione.mp4') }}><div style={{width: "22px", height: "22px", borderRadius: "5px", background: "#D1FAE5", color: "#065F46", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "9px", fontWeight: 700, flexShrink: 0}}>VID</div><span style={{flex: 1}}>Video-lezione.mp4</span><span style={{fontSize: "11px"}}>▶️</span></div>
                 </div>
               </div>
               <div className="aic" style={{flex: 1, minHeight: "280px", display: "flex", flexDirection: "column"}}>
@@ -1557,11 +1540,11 @@ export default function YourBest() {
               </div>
               <div className="tpb" style={{padding: 0}}>
                 <div style={{padding: "4px 10px 3px", fontSize: "9px", color: "var(--mu)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", borderBottom: "1px solid var(--bor)"}}>EQ. 2° GRADO</div>
-                <div className="tex on" onClick={() => { sSelEx(this,0) }}><div className="texn tner">1</div><div className="texnm">Formula risolutiva</div><span style={{fontSize: "11px"}}>❌</span></div>
-                <div className="tex" onClick={() => { sSelEx(this,1) }}><div className="texn tnok">2</div><div className="texnm">Discriminante</div><span style={{fontSize: "11px"}}>✅</span></div>
-                <div className="tex" onClick={() => { sSelEx(this,2) }}><div className="texn tntd">3</div><div className="texnm">Problemi applicativi</div><span style={{fontSize: "11px"}}>⚪</span></div>
+                <div className="tex on" onClick={(e) => { sSelEx(e.currentTarget,0) }}><div className="texn tner">1</div><div className="texnm">Formula risolutiva</div><span style={{fontSize: "11px"}}>❌</span></div>
+                <div className="tex" onClick={(e) => { sSelEx(e.currentTarget,1) }}><div className="texn tnok">2</div><div className="texnm">Discriminante</div><span style={{fontSize: "11px"}}>✅</span></div>
+                <div className="tex" onClick={(e) => { sSelEx(e.currentTarget,2) }}><div className="texn tntd">3</div><div className="texnm">Problemi applicativi</div><span style={{fontSize: "11px"}}>⚪</span></div>
                 <div style={{padding: "4px 10px 3px", fontSize: "9px", color: "var(--mu)", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".5px", borderTop: "1px solid var(--bor)", borderBottom: "1px solid var(--bor)"}}>SISTEMI LINEARI</div>
-                <div className="tex" onClick={() => { sSelEx(this,3) }}><div className="texn tntd">4</div><div className="texnm">Sostituzione</div><span style={{fontSize: "11px"}}>⚪</span></div>
+                <div className="tex" onClick={(e) => { sSelEx(e.currentTarget,3) }}><div className="texn tntd">4</div><div className="texnm">Sostituzione</div><span style={{fontSize: "11px"}}>⚪</span></div>
               </div>
             </div>
             <div style={{display: "flex", flexDirection: "column", gap: "11px", overflowY: "auto"}}>
@@ -1674,7 +1657,7 @@ export default function YourBest() {
       </div>
     </div>
   </div>
-  <div className="popup" id="pop-stu" onClick={() => { this.classList.add('off') }}><div className="poptop"><span className="poptit">📢 Nuovi materiali disponibili</span><button className="popx">✕</button></div><div className="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div></div>
+  <div className="popup" id="pop-stu" onClick={(e) => { e.currentTarget.classList.add('off') }}><div className="poptop"><span className="poptit">📢 Nuovi materiali disponibili</span><button className="popx">✕</button></div><div className="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div></div>
 </div>
 
 
@@ -1716,9 +1699,9 @@ export default function YourBest() {
     <button style={{padding: "3px 8px", borderRadius: "5px", border: "1px solid var(--bor)", background: "#fff", fontFamily: "'Courier New',monospace", fontSize: "10px", cursor: "pointer"}} onClick={() => { insF('\\pm') }}>±</button>
     <button style={{padding: "3px 8px", borderRadius: "5px", border: "1px solid var(--bor)", background: "#fff", fontFamily: "'Courier New',monospace", fontSize: "10px", cursor: "pointer"}} onClick={() => { insF('\\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}') }}>formula completa</button>
   </div>
-  <textarea className="mi" id="f-inp" style={{fontFamily: "'Courier New',monospace", height: "52px", resize: "none"}} onInput={() => { renderF(this.value) }}>x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}</textarea>
+  <textarea className="mi" id="f-inp" style={{fontFamily: "'Courier New',monospace", height: "52px", resize: "none"}} defaultValue={'x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}'} onInput={(e) => { renderF(e.target.value) }}></textarea>
   <div style={{fontSize: "10px", color: "var(--mu)", marginBottom: "4px"}}>Anteprima:</div>
-  <div id="f-prev" style={{minHeight: "38px", padding: "9px", background: "var(--sur)", borderRadius: "7px", border: "1px solid var(--bor)", marginBottom: "9px", textAlign: "center", fontSize: "14px"}}>\(x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}\)</div>
+  <div id="f-prev" style={{minHeight: "38px", padding: "9px", background: "var(--sur)", borderRadius: "7px", border: "1px solid var(--bor)", marginBottom: "9px", textAlign: "center", fontSize: "14px"}}>{'\\(x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\)'}</div>
   <div className="mact"><button className="btna" style={{flex: 1}} onClick={() => { insFormula() }}>Inserisci ✓</button><button className="btns" onClick={() => { closeMo('mo-formula') }}>Chiudi</button></div></div></div>
 
 <div className="mo" id="mo-mat"><div className="mbox"><div className="mt">Seleziona materia</div><div className="ms">Scegli su quale materia vuoi lavorare</div>
