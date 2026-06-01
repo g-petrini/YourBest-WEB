@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Login</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+<div id="pg-login" class="pg on auth">
+  <div class="acard">
+    <div class="logo">
+      <div class="logo-icon">⭐</div>
+      <div><div class="logo-txt">YOUR BEST</div><div class="logo-sub">PIATTAFORMA E-LEARNING</div></div>
+    </div>
+    <div class="ah1">Bentornato</div>
+    <div class="ah2">Accedi al tuo account</div>
+    <div class="albl">Seleziona ruolo</div>
+    <div class="rchips" id="login-chips">
+      <div class="rc on" onclick="setLoginRole(this,'doc')"><span class="rci">👨‍🏫</span>Docente</div>
+      <div class="rc" onclick="setLoginRole(this,'stu')"><span class="rci">👨‍🎓</span>Studente</div>
+      <div class="rc" onclick="setLoginRole(this,'ist')"><span class="rci">🏫</span>Istituzione</div>
+    </div>
+    <div class="albl">Email</div>
+    <input class="ainp" id="l-email" type="email" placeholder="email@liceo.it" value="giulia.rossi@liceo.it">
+    <div class="albl" style="margin-top:10px;">Password</div>
+    <input class="ainp" id="l-password" type="password" placeholder="••••••••">
+    <button class="abtn" onclick="doLogin()">Accedi →</button>
+    <button class="alnk" onclick="showPage('pg-register')">Non hai un account? Registrati</button>
+    <div class="anote">Demo · giulia.rossi (docente) · mario.rossi (studente)</div>
+  </div>
+</div>
+
+<!-- ===== REGISTRAZIONE ===== -->
+<div id="pg-register" class="pg auth" style="overflow-y:auto;">
+  <div class="acard" style="width:500px;max-width:96vw;">
+    <div class="logo" style="margin-bottom:22px;">
+      <div class="logo-icon">⭐</div>
+      <div><div class="logo-txt">YOUR BEST</div><div class="logo-sub">PIATTAFORMA E-LEARNING</div></div>
+    </div>
+    <div class="ah1">Crea il tuo account</div>
+    <div class="ah2" style="margin-bottom:20px;">Seleziona il ruolo per personalizzare la registrazione</div>
+    <div class="rchips" id="reg-chips">
+      <div class="rc on" onclick="setRegRole(this,'stu')"><span class="rci">👨‍🎓</span>Studente</div>
+      <div class="rc" onclick="setRegRole(this,'doc')"><span class="rci">👨‍🏫</span>Docente</div>
+      <div class="rc" onclick="setRegRole(this,'ist')"><span class="rci">🏫</span>Istituzione</div>
+    </div>
+    <!-- STUDENTE -->
+    <div id="rf-stu" class="regf on">
+      <div class="rgsec">Dati anagrafici</div>
+      <div class="grid2">
+        <div><div class="albl">Nome</div><input class="ainp-s" placeholder="Mario"></div>
+        <div><div class="albl">Cognome</div><input class="ainp-s" placeholder="Rossi"></div>
+        <div><div class="albl">Data di nascita</div><input class="ainp-s" type="date"></div>
+        <div><div class="albl">Codice fiscale</div><input class="ainp-s" placeholder="RSSMRA00..."></div>
+      </div>
+      <div class="rgsec">Dati scolastici</div>
+      <div class="albl">Istituto</div>
+      <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+        <option>Liceo Scientifico Einstein — Roma</option>
+        <option>Liceo Classico Virgilio — Roma</option>
+      </select>
+      <div class="grid2">
+        <div><div class="albl">Classe</div>
+          <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+            <option>3ª A</option><option>3ª B</option><option>4ª A</option>
+          </select>
+        </div>
+        <div><div class="albl">Anno scolastico</div>
+          <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+            <option>2025/2026</option>
+          </select>
+        </div>
+      </div>
+      <div class="minor">
+        <div class="minor-t">⚠️ Studente minorenne — Autorizzazione genitori</div>
+        <div class="grid2">
+          <div><div class="albl">Nome genitore</div><input class="ainp-s" placeholder="Giuseppe"></div>
+          <div><div class="albl">Cognome</div><input class="ainp-s" placeholder="Rossi"></div>
+        </div>
+        <div class="albl">Email genitore</div>
+        <input class="ainp-s" placeholder="genitore@email.it">
+        <div style="border:1.5px dashed rgba(255,255,255,.15);border-radius:8px;padding:10px;text-align:center;font-size:11px;color:rgba(255,255,255,.28);cursor:pointer;">📎 Carica documento di autorizzazione</div>
+      </div>
+      <div class="rgsec">Credenziali di accesso</div>
+      <div class="grid2">
+        <div><div class="albl">Email</div><input class="ainp-s" placeholder="mario@email.it"></div>
+        <div><div class="albl">Password</div><input class="ainp-s" type="password" placeholder="••••••••"></div>
+      </div>
+    </div>
+    <!-- DOCENTE -->
+    <div id="rf-doc" class="regf">
+      <div class="rgsec">Dati anagrafici</div>
+      <div class="grid2">
+        <div><div class="albl">Nome</div><input class="ainp-s" placeholder="Giulia"></div>
+        <div><div class="albl">Cognome</div><input class="ainp-s" placeholder="Rossi"></div>
+      </div>
+      <div class="albl">Email istituzionale</div>
+      <input class="ainp-s" placeholder="g.rossi@liceo.it">
+      <div class="rgsec">Dati professionali</div>
+      <div class="albl">Scuola</div>
+      <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+        <option>Liceo Scientifico Einstein — Roma</option>
+        <option>ITIS Galileo Ferraris — Milano</option>
+      </select>
+      <div class="grid2">
+        <div><div class="albl">Ruolo</div>
+          <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+            <option>Docente titolare</option><option>Supplente</option>
+          </select>
+        </div>
+        <div><div class="albl">Grado</div>
+          <select class="ainp-s" style="background:rgba(255,255,255,.07);color:rgba(255,255,255,.7);">
+            <option>Liceo</option><option>Scuola media</option>
+          </select>
+        </div>
+      </div>
+      <div class="albl">Materie insegnate</div>
+      <div class="msopts">
+        <div class="msopt on" onclick="this.classList.toggle('on')">Matematica</div>
+        <div class="msopt" onclick="this.classList.toggle('on')">Fisica</div>
+        <div class="msopt" onclick="this.classList.toggle('on')">Italiano</div>
+        <div class="msopt" onclick="this.classList.toggle('on')">Storia</div>
+        <div class="msopt" onclick="this.classList.toggle('on')">Scienze</div>
+      </div>
+      <div class="rgsec">Credenziali di accesso</div>
+      <div class="grid2">
+        <div><div class="albl">Email</div><input class="ainp-s" placeholder="g.rossi@liceo.it"></div>
+        <div><div class="albl">Password</div><input class="ainp-s" type="password" placeholder="••••••••"></div>
+      </div>
+    </div>
+    <!-- ISTITUZIONE -->
+    <div id="rf-ist" class="regf">
+      <div class="rgsec">Dati istituzione</div>
+      <div class="albl">Nome istituto</div>
+      <input class="ainp-s" placeholder="Liceo Scientifico Einstein">
+      <div class="grid2">
+        <div><div class="albl">Codice meccanografico</div><input class="ainp-s" placeholder="RMPS01000"></div>
+        <div><div class="albl">Città</div><input class="ainp-s" placeholder="Roma"></div>
+      </div>
+      <div class="albl">Email amministrativa</div>
+      <input class="ainp-s" placeholder="segreteria@liceo.edu.it">
+      <div class="grid2">
+        <div><div class="albl">Password</div><input class="ainp-s" type="password" placeholder="••••••••"></div>
+        <div><div class="albl">Conferma password</div><input class="ainp-s" type="password" placeholder="••••••••"></div>
+      </div>
+    </div>
+    <button class="abtn" onclick="showPage('pg-login')">Completa registrazione →</button>
+    <button class="alnk" onclick="showPage('pg-login')">← Torna al login</button>
+  </div>
+</div>
+<!-- ===== ONBOARDING DOCENTE ===== -->
+
+
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

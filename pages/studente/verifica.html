@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Verifica</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-stu" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcs">
+          <div class="rav rav-s">MR</div>
+          <div><div class="rname">Mario Rossi</div><div class="rsub">Liceo Einstein · 3A</div></div>
+          <span class="rbadge rbadge-s">STUDENTE</span>
+        </div>
+        <div class="cpill cpill-s" onclick="openMo('mo-mat')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div><span class="cpnm cpnm-s" id="s-mat-lbl">📐 Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on g" id="sn-home" onclick="sV('home')"><span class="nico">🏠</span>Home</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg g">
+          <div class="nis g" id="sn-studio" onclick="sV('studio')"><span class="nico">📚</span>Studio</div>
+          <div class="nis" id="sn-esercizi" onclick="sV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">3</span></div>
+          <div class="nis" id="sn-ripasso" onclick="sV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="sn-verifica" onclick="sV('verifica')"><span class="nico">📝</span>Verifica<span class="nbgr">Nuova</span></div>
+        </div>
+        <div class="nl" style="margin-top:4px;">Report</div>
+        <div class="ni g" id="sn-perf" onclick="sV('perf')"><span class="nico">📊</span>Le mie performance</div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="s-tit">Verifica</div><div class="pgsub">20 Marzo 2026</div></div></div>
+      <div class="cnt" id="s-cnt"><div id="sv-verifica" class="vw on">
+          <div style="background:linear-gradient(135deg,var(--navy),#1A3A5C);border-radius:9px;padding:9px 14px;margin-bottom:11px;font-size:13px;font-weight:700;color:#fff;">📝 Verifica — Equazioni e Sistemi · 25 marzo 2026</div>
+          <div style="display:grid;grid-template-columns:1fr 200px;gap:12px;height:calc(100vh - 58px - 110px);">
+            <div class="card" style="display:flex;flex-direction:column;overflow:hidden;">
+              <div style="padding:10px 15px;border-bottom:1px solid var(--bor);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+                <div><div style="font-size:12px;font-weight:700;">Verifica — Eq. e Sistemi · Dom. <span id="ver-qn">1</span>/4</div><div style="font-size:10px;color:var(--mu);">Prof. Carla Bianchi</div></div>
+                <div style="display:flex;align-items:center;gap:5px;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;padding:3px 9px;font-size:12px;font-weight:700;color:#991B1B;">⏱ <span id="ver-timer">45:00</span></div>
+              </div>
+              <div style="flex:1;padding:15px;overflow-y:auto;">
+                <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:12px;line-height:1.6;" id="ver-q">1. Risolvi la seguente equazione di secondo grado. Mostra tutti i passaggi e verifica le soluzioni:<br><br>x² − 5x + 6 = 0</div>
+                <textarea class="verans" id="ver-ans" placeholder="Svolgi qui la tua soluzione...&#10;&#10;Identifico: a=1, b=..., c=...&#10;Δ = ..."></textarea>
+                <div style="display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;"><button class="tbtn" onclick="openMo('mo-formula')">∑ Formula LaTeX</button><button class="tbtn">📎 Allega</button></div>
+                <div style="display:flex;justify-content:space-between;margin-top:12px;gap:7px;"><button class="btns" id="ver-prev" onclick="verNav(-1)" disabled>← Prec.</button><button class="btna" id="ver-next" onclick="verNav(1)">Successiva →</button></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;overflow-y:auto;">
+              <div class="card" style="padding:11px;"><div style="font-size:11px;font-weight:700;margin-bottom:7px;">Progresso</div><div style="display:flex;flex-wrap:wrap;gap:4px;" id="vq-grid"><div class="vqd curr" id="vq-0">1</div><div class="vqd" id="vq-1">2</div><div class="vqd" id="vq-2">3</div><div class="vqd" id="vq-3">4</div></div><div style="margin-top:6px;font-size:10px;color:var(--mu);" id="vq-cnt">0 di 4 completate</div></div>
+              <div class="card" style="padding:11px;"><div style="font-size:11px;font-weight:700;margin-bottom:5px;">📋 Istruzioni</div><div style="font-size:10px;color:var(--mu);line-height:1.6;">• Mostra tutti i passaggi<br>• Usa l'editor formule<br>• No aiuto AI in questa sezione<br>• Consegna entro il tempo</div></div>
+              <div class="card" style="padding:11px;"><div style="font-size:11px;font-weight:700;margin-bottom:6px;">📎 Carica elaborato</div><div style="border:2px dashed var(--bor);border-radius:8px;padding:11px;text-align:center;cursor:pointer;"><div style="font-size:17px;margin-bottom:3px;">📄</div><div style="font-size:10px;color:var(--mu);">Trascina o clicca</div></div></div>
+              <button style="width:100%;padding:10px;background:linear-gradient(135deg,var(--navy),#1A3A5C);border:none;border-radius:9px;color:#fff;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;" onclick="openMo('mo-consegna')">Consegna verifica</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERFORMANCE --></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-stu" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">📢 Nuovi materiali</span><button class="popx">✕</button></div>
+    <div class="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div>
+  </div>
+</div>
+
+<div class="chat-mo" id="mo-chat-docente">
+  <div class="chat-box">
+    <div class="chat-hdr">
+      <div class="aidot" style="background:var(--green);"></div>
+<div class="mo" id="mo-s-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-s-ses">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Sessione esercizi</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("sn-verifica");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

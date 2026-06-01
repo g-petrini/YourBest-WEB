@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Crea una Lezione</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-doc" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcd">
+          <div class="rav rav-d">GR</div>
+          <div><div class="rname">Giulia Rossi</div><div class="rsub">Liceo Einstein · Roma</div></div>
+          <span class="rbadge rbadge-d">DOCENTE</span>
+        </div>
+        <div class="cpill cpill-d" onclick="openMo('mo-ctx')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--blue);"></div><span class="cpnm cpnm-d" id="d-ctx-lbl">3A · Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on" id="dn-dash" onclick="dV('dash')"><span class="nico">🏠</span>Dashboard</div>
+        <div class="ni" id="dn-prog" onclick="dV('prog')"><span class="nico">📋</span>Programma didattico</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg">
+          <div class="nis" id="dn-studio" onclick="dV('studio')"><span class="nico">📝</span>Crea una Lezione</div>
+          <div class="nis" id="dn-esercizi" onclick="dV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">5</span></div>
+          <div class="nis" id="dn-analisi" onclick="dV('analisi')"><span class="nico">📊</span>Analisi Classe</div>
+          <div class="nis" id="dn-ripasso" onclick="dV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="dn-verifica" onclick="dV('verifica')"><span class="nico">📝</span>Verifica<span class="nbr">2</span></div>
+        </div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="d-tit">Crea una Lezione</div><div class="pgsub" id="d-ctx-lbl">3A · Matematica</div></div></div>
+      <div class="cnt" id="d-cnt"><div id="dv-studio" class="vw on">
+          <div class="ban-wrap">
+            <div class="ban ban-mat" id="d-les-mat-ban"><div class="ban-lbl" id="d-les-mat-lbl">📐 Matematica</div><div class="ban-btn" onclick="openMo('mo-d-mat')">▾</div></div>
+            <div class="ban ban-arg" id="d-les-arg-ban"><div class="ban-lbl" id="d-les-arg-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-d-arg')">▾</div></div>
+            <div class="ban ban-sub" id="d-les-sub-ban"><div class="ban-lbl sub" id="d-les-sub-lbl">Equazioni di 2° grado</div><div class="ban-btn" onclick="openMo('mo-d-sub')">▾</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:218px 1fr;gap:12px;height:calc(100vh - 58px - 155px);">
+            <div class="tp" style="display:flex;flex-direction:column;">
+              <div class="tph"><div class="tpt">Lezioni</div><button class="btna" style="font-size:10px;" onclick="openMo('mo-new-les')">+ Nuova</button></div>
+              <div style="flex:1;overflow-y:auto;padding:0;" id="d-les-list">
+                <div class="les-row-item active" id="dll-0" onclick="dSelLesson(0)"><div class="les-dot les-done">✅</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.1 — Introduzione</div><div style="font-size:10px;color:var(--mu);">12 gen 2026</div></div></div>
+                <div class="les-row-item" id="dll-1" onclick="dSelLesson(1)"><div class="les-dot les-curr">🔵</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.2 — Il discriminante Δ</div><div style="font-size:10px;color:var(--mu);">19 gen 2026</div></div></div>
+                <div class="les-row-item" id="dll-2" onclick="dSelLesson(2)"><div class="les-dot les-todo">⚪</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.3 — Formula completa</div><div style="font-size:10px;color:var(--mu);">26 gen 2026</div></div></div>
+                <div class="les-row-item" id="dll-3" onclick="dSelLesson(3)"><div class="les-dot les-todo">⚪</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.4 — Esercizi guidati</div><div style="font-size:10px;color:var(--mu);">2 feb 2026</div></div></div>
+              </div>
+              <div style="padding:7px;border-top:1px solid var(--bor);"><button class="btna" style="width:100%;font-size:10px;" onclick="openMo('mo-new-les')">+ Nuova lezione</button></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div class="card">
+                <div class="ch"><span>📖</span><div style="flex:1;"><div class="ct" id="d-les-det-title">Lez.2 — Il discriminante Δ</div><div style="font-size:10px;color:var(--mu);" id="d-les-det-sub">19 gen 2026 · Eq. 2° grado</div></div><span class="tag ta mla" id="d-les-det-tag">In corso</span><button class="btns" style="margin-left:7px;font-size:10px;">Modifica</button></div>
+                <div style="padding:10px 14px;">
+                  <div style="font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Documenti caricati</div>
+                  <div id="d-les-docs-container">
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--bor);font-size:11px;"><div style="width:22px;height:22px;border-radius:5px;background:#FEE2E2;color:#991B1B;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">PDF</div><span style="flex:1;">Cap.4 — Il discriminante.pdf</span><span class="tag tg" style="font-size:9px;">AI pronto</span></div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--bor);font-size:11px;"><div style="width:22px;height:22px;border-radius:5px;background:#FFFBEB;color:#92400E;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">PPT</div><span style="flex:1;">Slide_discriminante.pptx</span><span class="tag tg" style="font-size:9px;">AI pronto</span></div>
+                    <div style="display:flex;align-items:center;gap:7px;padding:6px 0;font-size:11px;"><div style="width:22px;height:22px;border-radius:5px;background:#D1FAE5;color:#065F46;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">VID</div><span style="flex:1;">Video-lezione.mp4</span><span class="tag tw" style="font-size:9px;">In elab.</span></div>
+                  </div>
+                  <div style="margin-top:9px;border:2px dashed var(--bor);border-radius:8px;padding:11px;text-align:center;cursor:pointer;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--bor)'"><div style="font-size:15px;margin-bottom:2px;">📤</div><div style="font-size:11px;font-weight:600;color:var(--navy);">Carica documento</div></div>
+                </div>
+              </div>
+              <div class="aic" style="flex:1;min-height:260px;display:flex;flex-direction:column;">
+                <div class="aich"><div class="aidot"></div><div style="flex:1;"><div class="ait">AI — Crea contenuti per questa lezione</div><div class="ais">Basato sui documenti caricati</div></div></div>
+                <div class="aimsgs" id="d-chat-les" style="flex:1;"><div class="msg bot">Ciao Giulia! Ho analizzato i documenti della <strong id="d-les-ai-ctx">Lez.2 — Il discriminante Δ</strong>. Posso aiutarti a strutturare spiegazioni, esempi ed esercizi. Da dove vuoi iniziare?</div></div>
+                <div class="qrow">
+                  <button class="qbtn" onclick="dChatLes('📋 Struttura spiegazione')">📋 Struttura</button>
+                  <button class="qbtn" onclick="dChatLes('💡 Genera esempi pratici')">💡 Esempi</button>
+                  <button class="qbtn" onclick="dChatLes('✏️ Crea esercizi graduati')">✏️ Esercizi</button>
+                  <button class="qbtn" onclick="dChatLes('⚠️ Errori comuni')">⚠️ Errori</button>
+                </div>
+                <div class="ai-irow"><textarea class="ai-inp" id="d-les-inp" rows="1" placeholder="Chiedi all'AI di creare contenuti..."></textarea><button class="ai-snd" onclick="dChatLesSend()">➤</button></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-doc" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">🤖 Analisi AI disponibile</span><button class="popx">✕</button></div>
+    <div class="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div>
+  </div>
+</div>
+
+<div class="mo" id="mo-ctx"><div class="mbox"><div class="mt">Cambia classe</div>
+<div class="mo" id="mo-arg"><div class="mbox"><div class="mt">Seleziona argomento</div>
+<div class="mo" id="mo-new-arg"><div class="mbox"><div class="mt">Nuovo argomento</div>
+<div class="mo" id="mo-new-les"><div class="mbox"><div class="mt">Aggiungi lezione</div>
+<div class="mo" id="mo-new-es"><div class="mbox w"><div class="mt">Nuovo esercizio</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-mat"><div class="mbox"><div class="mt">Seleziona materia</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+<div class="mo" id="mo-d-mat">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona materia</div>
+<div class="mo" id="mo-d-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-d-sub">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona sotto-argomento</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("dn-studio");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

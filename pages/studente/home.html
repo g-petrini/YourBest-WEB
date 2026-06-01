@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Home</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-stu" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcs">
+          <div class="rav rav-s">MR</div>
+          <div><div class="rname">Mario Rossi</div><div class="rsub">Liceo Einstein · 3A</div></div>
+          <span class="rbadge rbadge-s">STUDENTE</span>
+        </div>
+        <div class="cpill cpill-s" onclick="openMo('mo-mat')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div><span class="cpnm cpnm-s" id="s-mat-lbl">📐 Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on g" id="sn-home" onclick="sV('home')"><span class="nico">🏠</span>Home</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg g">
+          <div class="nis g" id="sn-studio" onclick="sV('studio')"><span class="nico">📚</span>Studio</div>
+          <div class="nis" id="sn-esercizi" onclick="sV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">3</span></div>
+          <div class="nis" id="sn-ripasso" onclick="sV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="sn-verifica" onclick="sV('verifica')"><span class="nico">📝</span>Verifica<span class="nbgr">Nuova</span></div>
+        </div>
+        <div class="nl" style="margin-top:4px;">Report</div>
+        <div class="ni g" id="sn-perf" onclick="sV('perf')"><span class="nico">📊</span>Le mie performance</div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="s-tit">Home</div><div class="pgsub">20 Marzo 2026</div></div></div>
+      <div class="cnt" id="s-cnt"><div id="sv-home" class="vw on">
+          <div style="background:linear-gradient(135deg,var(--navy),#1A3A5C);border-radius:13px;padding:18px 22px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+            <div style="position:absolute;right:-10px;top:-10px;width:110px;height:110px;border-radius:50%;background:rgba(5,150,105,.13);"></div>
+            <div><div style="font-family:'Clash Display',sans-serif;font-size:19px;color:#fff;margin-bottom:2px;">Ciao Mario! 👋</div><div style="font-size:11px;color:rgba(255,255,255,.42);margin-bottom:11px;">2 nuove lezioni e 3 esercizi questa settimana</div>
+              <div style="display:flex;gap:7px;"><button class="btna" onclick="sV('studio')">📚 Studio</button><button class="btns" style="border-color:rgba(255,255,255,.2);color:rgba(255,255,255,.5);background:transparent;" onclick="sV('esercizi')">✏️ Esercizi</button></div>
+            </div>
+            <div style="font-size:34px;position:relative;z-index:1;">📖</div>
+          </div>
+          <!-- Chat con docente (1.1) -->
+          <div onclick="openChatDocente()" style="background:linear-gradient(135deg,#064E3B,#065F46);border-radius:11px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:12px;" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+            <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;">💬</div>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;">Scrivi al docente</div><div style="font-size:10px;color:rgba(255,255,255,.55);">Invia un messaggio — risposta entro 24h</div></div>
+            <div style="font-size:18px;color:rgba(255,255,255,.55);">→</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div style="background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:11px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:#1E40AF;margin-bottom:7px;">📖 Nuove lezioni</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:3px;"></span><strong>Mat.</strong> — Il discriminante</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:3px;"></span><strong>Mat.</strong> — Formula completa</div>
+              <div style="font-size:11px;padding:4px 0;display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:#8B5CF6;flex-shrink:0;margin-top:3px;"></span><strong>Ita.</strong> — Il personaggio narrativo</div>
+            </div>
+            <div style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:11px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:#92400E;margin-bottom:7px;">✏️ Esercizi assegnati</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><strong>Mat.</strong> — Formula risolutiva · 21 mar</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><strong>Mat.</strong> — Discriminante · 21 mar</div>
+              <div style="font-size:11px;padding:4px 0;display:flex;gap:5px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><strong>Ita.</strong> — Analisi personaggio · 24 mar</div>
+            </div>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;">Le tue materie</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:#fff;border-radius:11px;border:1.5px solid var(--bor);padding:13px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="setSMat('mat');sV('studio')">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#1E6BFF,#4D8DFF);"></div>
+              <div style="font-size:20px;margin-bottom:5px;">📐</div>
+              <div style="font-size:12px;font-weight:700;margin-bottom:2px;">Matematica</div>
+              <div style="font-size:10px;color:var(--mu);margin-bottom:8px;">Prof. Carla Bianchi</div>
+              <div style="height:4px;background:var(--bor);border-radius:2px;margin-bottom:3px;"><div style="height:100%;width:58%;background:#1E6BFF;border-radius:2px;"></div></div>
+              <div style="font-size:9px;color:var(--mu);">Eq. 2° grado · 58%</div>
+            </div>
+            <div style="background:#fff;border-radius:11px;border:1.5px solid var(--bor);padding:13px;cursor:pointer;transition:.2s;position:relative;overflow:hidden;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''" onclick="setSMat('ita');sV('studio')">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#8B5CF6,#7C3AED);"></div>
+              <div style="font-size:20px;margin-bottom:5px;">📚</div>
+              <div style="font-size:12px;font-weight:700;margin-bottom:2px;">Italiano</div>
+              <div style="font-size:10px;color:var(--mu);margin-bottom:8px;">Prof. Marco Ferri</div>
+              <div style="height:4px;background:var(--bor);border-radius:2px;margin-bottom:3px;"><div style="height:100%;width:42%;background:#8B5CF6;border-radius:2px;"></div></div>
+              <div style="font-size:9px;color:var(--mu);">Analisi testo · 42%</div>
+            </div>
+          </div>
+        </div></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-stu" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">📢 Nuovi materiali</span><button class="popx">✕</button></div>
+    <div class="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div>
+  </div>
+</div>
+
+<div class="chat-mo" id="mo-chat-docente">
+  <div class="chat-box">
+    <div class="chat-hdr">
+      <div class="aidot" style="background:var(--green);"></div>
+<div class="mo" id="mo-s-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-s-ses">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Sessione esercizi</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("sn-home");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Programma Didattico</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-doc" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcd">
+          <div class="rav rav-d">GR</div>
+          <div><div class="rname">Giulia Rossi</div><div class="rsub">Liceo Einstein · Roma</div></div>
+          <span class="rbadge rbadge-d">DOCENTE</span>
+        </div>
+        <div class="cpill cpill-d" onclick="openMo('mo-ctx')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--blue);"></div><span class="cpnm cpnm-d" id="d-ctx-lbl">3A · Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on" id="dn-dash" onclick="dV('dash')"><span class="nico">🏠</span>Dashboard</div>
+        <div class="ni" id="dn-prog" onclick="dV('prog')"><span class="nico">📋</span>Programma didattico</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg">
+          <div class="nis" id="dn-studio" onclick="dV('studio')"><span class="nico">📝</span>Crea una Lezione</div>
+          <div class="nis" id="dn-esercizi" onclick="dV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">5</span></div>
+          <div class="nis" id="dn-analisi" onclick="dV('analisi')"><span class="nico">📊</span>Analisi Classe</div>
+          <div class="nis" id="dn-ripasso" onclick="dV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="dn-verifica" onclick="dV('verifica')"><span class="nico">📝</span>Verifica<span class="nbr">2</span></div>
+        </div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="d-tit">Programma Didattico</div><div class="pgsub" id="d-ctx-lbl">3A · Matematica</div></div></div>
+      <div class="cnt" id="d-cnt"><div id="dv-prog" class="vw on">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+            <div><div style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);" id="prog-title">Programma — 3A Matematica</div><div style="font-size:10px;color:var(--mu);">A.S. 2025/2026</div></div>
+            <div style="display:flex;gap:7px;">
+              <button class="btna" id="prog-btn-mat" style="font-size:10px;" onclick="switchProgClasse('mat')">📐 3A Matematica</button>
+              <button class="btns" id="prog-btn-ita" style="font-size:10px;" onclick="switchProgClasse('ita')">📚 4B Italiano</button>
+              <button class="btna" onclick="openMo('mo-new-arg')">+ Argomento</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:260px 1fr;gap:13px;height:calc(100vh - 58px - 105px);">
+            <div class="tp" style="display:flex;flex-direction:column;">
+              <div class="tph"><div class="tpt">Argomenti</div></div>
+              <div style="flex:1;overflow-y:auto;">
+                <div id="prog-mat-list">
+                  <div id="pda-0" onclick="selProgArg(0)" style="padding:11px 13px;border-bottom:1px solid var(--bor);display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--bpale);">
+                    <span>📐</span><div style="flex:1;"><div style="font-size:12px;font-weight:700;">Equazioni e sistemi</div><div style="font-size:10px;color:var(--mu);">Gen–Mar 2026 · In corso</div></div><span style="font-size:10px;color:var(--blue);">🔵</span>
+                  </div>
+                  <div id="pda-1" onclick="selProgArg(1)" style="padding:11px 13px;border-bottom:1px solid var(--bor);display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <span>📏</span><div style="flex:1;"><div style="font-size:12px;font-weight:700;">Geometria analitica</div><div style="font-size:10px;color:var(--mu);">Apr–Giu 2026</div></div><span style="font-size:10px;color:var(--mu);">⚪</span>
+                  </div>
+                  <div onclick="openMo('mo-new-arg')" style="padding:11px 13px;text-align:center;cursor:pointer;border-bottom:1px solid var(--bor);"><span style="font-size:11px;font-weight:700;color:var(--blue);">+ Aggiungi argomento</span></div>
+                </div>
+                <div id="prog-ita-list" style="display:none;">
+                  <div id="pda-ita-0" onclick="selProgArg(10)" style="padding:11px 13px;border-bottom:1px solid var(--bor);display:flex;align-items:center;gap:8px;cursor:pointer;background:#F5F3FF;">
+                    <span>📖</span><div style="flex:1;"><div style="font-size:12px;font-weight:700;">Analisi del testo narrativo</div><div style="font-size:10px;color:var(--mu);">Gen–Mar 2026 · In corso</div></div><span style="font-size:10px;color:#8B5CF6;">🔵</span>
+                  </div>
+                  <div id="pda-ita-1" onclick="selProgArg(11)" style="padding:11px 13px;border-bottom:1px solid var(--bor);display:flex;align-items:center;gap:8px;cursor:pointer;">
+                    <span>✍️</span><div style="flex:1;"><div style="font-size:12px;font-weight:700;">Scrittura argomentativa</div><div style="font-size:10px;color:var(--mu);">Apr–Giu 2026</div></div><span style="font-size:10px;color:var(--mu);">⚪</span>
+                  </div>
+                  <div onclick="openMo('mo-new-arg')" style="padding:11px 13px;text-align:center;cursor:pointer;border-bottom:1px solid var(--bor);"><span style="font-size:11px;font-weight:700;color:#8B5CF6;">+ Aggiungi argomento</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="overflow-y:auto;">
+              <div class="ch"><span id="prog-det-icon" style="font-size:14px;">📐</span><div class="ct" id="prog-det-title">Equazioni e sistemi</div><button class="btns mla">Modifica</button></div>
+              <div style="padding:12px 14px;">
+                <div style="font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Obiettivi didattici</div>
+                <div id="prog-det-obj">
+                  <div style="display:flex;gap:5px;font-size:11px;margin-bottom:4px;"><span style="color:var(--green);">✓</span>Risolvere equazioni di 1° e 2° grado</div>
+                  <div style="display:flex;gap:5px;font-size:11px;margin-bottom:4px;"><span style="color:var(--green);">✓</span>Calcolare e interpretare il discriminante Δ</div>
+                  <div style="display:flex;gap:5px;font-size:11px;"><span style="color:var(--mu);">○</span><span style="color:var(--mu);">Risolvere sistemi lineari</span></div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin:12px 0 8px;">
+                  <div style="font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;">Sotto-argomenti e Lezioni</div>
+                  <button class="btns" onclick="openMo('mo-new-arg')" style="font-size:10px;">+ Sotto-arg.</button>
+                </div>
+                <div id="prog-det-subs">
+                  <div style="background:#DBEAFE;border:1.5px solid #93C5FD;border-radius:9px;padding:9px 11px;margin-bottom:7px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+                      <div style="font-size:11px;font-weight:700;color:#1E40AF;">🔵 Equazioni di 2° grado <span class="tag ta" style="font-size:9px;">In corso</span></div>
+                      <button class="btns" style="font-size:10px;" onclick="openMo('mo-new-les')">+ Lezione</button>
+                    </div>
+                    <div onclick="selProgLes(this)" style="display:flex;align-items:center;gap:6px;padding:6px 9px;background:#fff;border-radius:6px;margin-bottom:3px;border:1px solid var(--bor);cursor:pointer;font-size:11px;"><div class="les-dot les-done">✅</div><span style="flex:1;">Lez.1 — Introduzione</span><span style="font-size:9px;color:var(--mu);">12 gen</span></div>
+                    <div onclick="selProgLes(this)" style="display:flex;align-items:center;gap:6px;padding:6px 9px;background:#fff;border-radius:6px;margin-bottom:3px;border:1.5px solid #93C5FD;cursor:pointer;font-size:11px;"><div class="les-dot les-curr">🔵</div><span style="flex:1;">Lez.2 — Il discriminante Δ</span><span style="font-size:9px;color:var(--mu);">19 gen</span></div>
+                    <div onclick="selProgLes(this)" style="display:flex;align-items:center;gap:6px;padding:6px 9px;background:#fff;border-radius:6px;border:1px solid var(--bor);cursor:pointer;font-size:11px;"><div class="les-dot les-todo">⚪</div><span style="flex:1;">Lez.3 — Formula completa</span><span style="font-size:9px;color:var(--mu);">26 gen</span></div>
+                    <div id="prog-doc-detail" style="display:none;margin-top:8px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:7px;padding:9px 11px;">
+                      <div style="font-size:10px;font-weight:700;color:#0369A1;margin-bottom:5px;">📎 Documenti associati</div>
+                      <div style="font-size:11px;display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);"><div style="width:20px;height:20px;border-radius:4px;background:#FEE2E2;color:#991B1B;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;">PDF</div>Cap.4 — Il discriminante.pdf</div>
+                      <div style="font-size:11px;display:flex;align-items:center;gap:6px;padding:4px 0;"><div style="width:20px;height:20px;border-radius:4px;background:#FFFBEB;color:#92400E;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;">PPT</div>Slide_discriminante.pptx</div>
+                    </div>
+                  </div>
+                  <div style="background:var(--sur);border:1.5px solid var(--bor);border-radius:9px;padding:9px 11px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;">
+                      <div style="font-size:11px;font-weight:700;color:#6B7280;">⚪ Sistemi lineari <span class="tag tl" style="font-size:9px;">Da fare</span></div>
+                      <button class="btns" style="font-size:10px;" onclick="openMo('mo-new-les')">+ Lezione</button>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:6px 9px;background:#fff;border-radius:6px;margin-bottom:3px;border:1px solid var(--bor);cursor:pointer;font-size:11px;" onclick="selProgLes(this)"><div class="les-dot les-todo">⚪</div><span style="flex:1;">Lez.1 — Metodo sostituzione</span><span style="font-size:9px;color:var(--mu);">Feb</span></div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:6px 9px;background:#fff;border-radius:6px;border:1px solid var(--bor);font-size:11px;opacity:.5;"><div class="les-dot les-lk">🔒</div><span style="flex:1;color:#9CA3AF;">Lez.2 — Eliminazione</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-doc" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">🤖 Analisi AI disponibile</span><button class="popx">✕</button></div>
+    <div class="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div>
+  </div>
+</div>
+
+<div class="mo" id="mo-ctx"><div class="mbox"><div class="mt">Cambia classe</div>
+<div class="mo" id="mo-arg"><div class="mbox"><div class="mt">Seleziona argomento</div>
+<div class="mo" id="mo-new-arg"><div class="mbox"><div class="mt">Nuovo argomento</div>
+<div class="mo" id="mo-new-les"><div class="mbox"><div class="mt">Aggiungi lezione</div>
+<div class="mo" id="mo-new-es"><div class="mbox w"><div class="mt">Nuovo esercizio</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-mat"><div class="mbox"><div class="mt">Seleziona materia</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+<div class="mo" id="mo-d-mat">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona materia</div>
+<div class="mo" id="mo-d-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-d-sub">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona sotto-argomento</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("dn-prog");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

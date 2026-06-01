@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Verifica</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-doc" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcd">
+          <div class="rav rav-d">GR</div>
+          <div><div class="rname">Giulia Rossi</div><div class="rsub">Liceo Einstein · Roma</div></div>
+          <span class="rbadge rbadge-d">DOCENTE</span>
+        </div>
+        <div class="cpill cpill-d" onclick="openMo('mo-ctx')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--blue);"></div><span class="cpnm cpnm-d" id="d-ctx-lbl">3A · Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on" id="dn-dash" onclick="dV('dash')"><span class="nico">🏠</span>Dashboard</div>
+        <div class="ni" id="dn-prog" onclick="dV('prog')"><span class="nico">📋</span>Programma didattico</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg">
+          <div class="nis" id="dn-studio" onclick="dV('studio')"><span class="nico">📝</span>Crea una Lezione</div>
+          <div class="nis" id="dn-esercizi" onclick="dV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">5</span></div>
+          <div class="nis" id="dn-analisi" onclick="dV('analisi')"><span class="nico">📊</span>Analisi Classe</div>
+          <div class="nis" id="dn-ripasso" onclick="dV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="dn-verifica" onclick="dV('verifica')"><span class="nico">📝</span>Verifica<span class="nbr">2</span></div>
+        </div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="d-tit">Verifica</div><div class="pgsub" id="d-ctx-lbl">3A · Matematica</div></div></div>
+      <div class="cnt" id="d-cnt"><div id="dv-verifica" class="vw on">
+          <div class="ban-wrap"><div class="ban ban-mat"><div class="ban-lbl">📐 Matematica</div><div class="ban-btn" onclick="openMo('mo-d-mat')">▾</div></div><div class="ban ban-arg"><div class="ban-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-d-arg')">▾</div></div></div>
+          <div class="krow">
+            <div class="kc"><div class="kico">📋</div><div class="kval">5</div><div class="klbl">Elaborati ricevuti</div><div class="kdelta up">tutti</div></div>
+            <div class="kc"><div class="kico">✅</div><div class="kval">1</div><div class="klbl">Votati</div><div class="kdelta wa">4 in attesa</div></div>
+            <div class="kc"><div class="kico">📊</div><div class="kval">69%</div><div class="klbl">Media AI</div><div class="kdelta wa">sotto soglia</div></div>
+            <div class="kc"><div class="kico">📅</div><div class="kval">25/03</div><div class="klbl">Scadenza voti</div><div class="kdelta dn">5 giorni</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 250px;gap:12px;height:calc(100vh - 58px - 192px);">
+            <div class="card" style="overflow-y:auto;">
+              <div class="ch"><span>👥</span><div class="ct">Studenti — Verifica Eq. e Sistemi</div><span style="margin-left:auto;font-size:9px;font-weight:700;background:#DC2626;color:#fff;border-radius:16px;padding:2px 7px;">4 da correggere</span></div>
+              <div style="padding:0 14px;">
+                <div style="padding:9px 0;border-bottom:1px solid var(--bor);">
+                  <div style="display:flex;align-items:center;gap:7px;cursor:pointer;" onclick="dV('ver-stud','Luca Marini','ag','LM',9)"><div class="sav ag">LM</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Luca Marini</div><div style="font-size:10px;color:var(--mu);">38 min · clicca per vedere la verifica</div></div><div style="font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:#059669;">91</div><input class="mi" value="9" style="width:44px;padding:4px 7px;text-align:center;font-weight:700;margin:0 0 0 7px;"><button class="btna" style="font-size:9px;margin-left:5px;">✓</button></div>
+                  <div style="margin-top:7px;background:var(--sur);border-radius:7px;padding:8px 10px;font-size:11px;border:1px solid var(--bor);"><span style="font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;">🤖 Pre-analisi AI: </span>Tutti i procedimenti corretti. Alta autonomia. Nessun aiuto richiesto.</div>
+                </div>
+                <div class="srow" style="border-bottom:1px solid var(--bor);padding:9px 0;" onclick="dV('ver-stud','Sara Ferri','ab','SF',7)"><div class="sav ab">SF</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Sara Ferri</div><div style="font-size:10px;color:var(--mu);">44 min</div></div><div style="font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:var(--gold);">74</div><input class="mi" value="7" style="width:44px;padding:4px 7px;text-align:center;font-weight:700;margin:0 0 0 7px;"><button class="btna" style="font-size:9px;margin-left:5px;">✓</button></div>
+                <div class="srow" style="border-bottom:1px solid var(--bor);padding:9px 0;" onclick="dV('ver-stud','Pietro Leone','ap','PL',7)"><div class="sav ap">PL</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Pietro Leone</div><div style="font-size:10px;color:var(--mu);">41 min</div></div><div style="font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:var(--gold);">68</div><input class="mi" value="7" style="width:44px;padding:4px 7px;text-align:center;font-weight:700;margin:0 0 0 7px;"><button class="btna" style="font-size:9px;margin-left:5px;">✓</button></div>
+                <div class="srow" style="border-bottom:1px solid var(--bor);padding:9px 0;" onclick="dV('ver-stud','Marco Galli','ay','MG',4)"><div class="sav ay">MG</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Marco Galli</div><div style="font-size:10px;color:var(--mu);">49 min</div></div><div style="font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:#DC2626;">43</div><input class="mi" value="4" style="width:44px;padding:4px 7px;text-align:center;font-weight:700;margin:0 0 0 7px;"><button class="btna" style="font-size:9px;margin-left:5px;">✓</button></div>
+                <div class="srow" style="padding:9px 0;" onclick="dV('ver-stud','Anna Vitale','ar','AV',5)"><div class="sav ar">AV</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Anna Vitale</div><div style="font-size:10px;color:var(--mu);">51 min</div></div><div style="font-family:'Clash Display',sans-serif;font-size:18px;font-weight:700;color:#DC2626;">49</div><input class="mi" value="5" style="width:44px;padding:4px 7px;text-align:center;font-weight:700;margin:0 0 0 7px;"><button class="btna" style="font-size:9px;margin-left:5px;">✓</button></div>
+              </div>
+              <div style="padding:9px 14px;border-top:1px solid var(--bor);"><div style="font-size:10px;color:var(--mu);font-style:italic;margin-bottom:6px;">⚠️ Il voto finale è assegnato dal docente. L'AI fornisce solo supporto all'analisi.</div><div style="display:flex;gap:7px;"><button class="btns" style="flex:1;font-size:10px;" onclick="dV('rep-ver')">📊 Report di classe completo</button><button class="btna" style="font-size:10px;">Salva tutti i voti</button></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div class="card" style="padding:12px;"><div style="font-size:11px;font-weight:700;margin-bottom:8px;">📝 Dettagli</div><div style="display:flex;flex-direction:column;gap:5px;font-size:11px;"><div style="display:flex;justify-content:space-between;"><span style="color:var(--mu);">Titolo</span><span style="font-weight:600;">Equazioni e Sistemi</span></div><div style="display:flex;justify-content:space-between;"><span style="color:var(--mu);">Data</span><span style="font-weight:600;">20 marzo 2026</span></div><div style="display:flex;justify-content:space-between;"><span style="color:var(--mu);">Tempo</span><span style="font-weight:600;">50 min</span></div><div style="display:flex;justify-content:space-between;"><span style="color:var(--mu);">Media</span><span style="font-weight:700;color:var(--gold);">6.4/10</span></div></div></div>
+              <div class="card" style="padding:12px;"><div style="font-size:11px;font-weight:700;margin-bottom:8px;">📊 Distribuzione voti</div><canvas id="ver-ch" height="140"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VER STUD -->
+<div id="dv-ver-stud" class="vw">
+          <button class="bbtn" onclick="dV('verifica')">← Torna alle verifiche</button>
+          <div class="card">
+            <div class="ch"><div class="sav ag" id="vs-av">LM</div><div style="flex:1;"><div class="ct" id="vs-nm">Luca Marini — Verifica</div><div style="font-size:10px;color:var(--mu);">20 mar · 38 min</div></div><span class="tag tg mla" id="vs-voto">Voto: 9/10</span></div>
+            <div style="padding:10px 14px;">
+              <div class="pi piok"><div class="pilbl ok">✅ Dom. 1 — Risolvi x²−5x+6=0 — Perfetta</div><div style="font-size:11px;">Metodo corretto, discriminante esatto, soluzioni con verifica.</div></div>
+              <div class="pi piok"><div class="pilbl ok">✅ Dom. 2 — Analisi discriminante — Corretta</div><div style="font-size:11px;">Calcolo Δ perfetto, interpretazione del segno corretta.</div></div>
+              <div class="pi piwa"><div class="pilbl wa">⚠️ Dom. 3 — Sistema — Parzialmente corretta</div><div style="font-size:11px;">Soluzione trovata ma verifica non inclusa. −1 punto metodologico.</div></div>
+              <div class="pi piok"><div class="pilbl ok">✅ Dom. 4 — Problema geometrico — Corretta</div><div style="font-size:11px;">Impostazione perfetta, soluzione corretta e coerente col contesto.</div></div>
+              <div class="aiins" style="margin-top:9px;"><div class="aiinst">🤖 Riepilogo AI</div><div class="aiinsb"><strong>Punti di forza:</strong> ottima padronanza, metodo rigoroso. <strong>Margine:</strong> includere sempre la verifica nei sistemi.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- REP ES --></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-doc" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">🤖 Analisi AI disponibile</span><button class="popx">✕</button></div>
+    <div class="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div>
+  </div>
+</div>
+
+<div class="mo" id="mo-ctx"><div class="mbox"><div class="mt">Cambia classe</div>
+<div class="mo" id="mo-arg"><div class="mbox"><div class="mt">Seleziona argomento</div>
+<div class="mo" id="mo-new-arg"><div class="mbox"><div class="mt">Nuovo argomento</div>
+<div class="mo" id="mo-new-les"><div class="mbox"><div class="mt">Aggiungi lezione</div>
+<div class="mo" id="mo-new-es"><div class="mbox w"><div class="mt">Nuovo esercizio</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-mat"><div class="mbox"><div class="mt">Seleziona materia</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+<div class="mo" id="mo-d-mat">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona materia</div>
+<div class="mo" id="mo-d-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-d-sub">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona sotto-argomento</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("dn-verifica");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

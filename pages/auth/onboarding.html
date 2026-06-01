@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Seleziona classe</title>
+
+<!-- ===== APP DOCENTE ===== -->
+
+<script src="../../assets/data.js"></script>
+<script src="../../assets/api.js"></script>
+<script src="../../assets/app.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var token = sessionStorage.getItem('yb_token');
+  if (!token) return;
+
+  fetch(BASE_URL_API + '/api/teaching-assignments/my', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(assignments) {
+    if (!assignments || !assignments.length) return;
+
+    // Salva tutte le assegnazioni per usarle dopo la scelta
+    sessionStorage.setItem('yb_assignments', JSON.stringify(assignments));
+
+    // Raggruppa per classe (un docente può avere più materie per classe)
+    var classi = {};
+    assignments.forEach(function(a) {
+      if (!classi[a.classGroupId]) {
+        classi[a.classGroupId] = {
+          classGroupId: a.classGroupId,
+          classGroupName: a.classGroupName,
+          academicYear: a.academicYear,
+          subjects: []
+        };
+      }
+      classi[a.classGroupId].subjects.push({
+        subjectId: a.subjectId,
+        subjectName: a.subjectName
+      });
+    });
+
+    // Popola la lista classi nell'onboarding
+    var container = document.getElementById('ob-classes');
+    if (!container) return;
+    container.innerHTML = '';
+
+    var keys = Object.keys(classi);
+    keys.forEach(function(cid, idx) {
+      var c = classi[cid];
+      var materie = c.subjects.map(function(s){ return s.subjectName; }).join(', ');
+      var div = document.createElement('div');
+      div.id = 'ob-' + idx;
+      div.style.cssText = 'display:flex;align-items:center;gap:11px;padding:12px 15px;border-radius:11px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);cursor:pointer;margin-bottom:8px;transition:.15s;';
+      div.innerHTML =
+        '<div style="width:36px;height:36px;border-radius:9px;background:rgba(30,107,255,.25);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🏫</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-size:13px;font-weight:700;color:#fff;">' + c.classGroupName + '</div>' +
+          '<div style="font-size:10px;color:rgba(255,255,255,.5);">' + materie + ' · ' + c.academicYear + '</div>' +
+        '</div>' +
+        '<div id="ob-chk-' + idx + '" style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.2);flex-shrink:0;"></div>';
+      div.onclick = (function(i, classData) {
+        return function() {
+          // Salva la classe selezionata
+          sessionStorage.setItem('yb_classGroupId',   classData.classGroupId);
+          sessionStorage.setItem('yb_classGroupName', classData.classGroupName);
+          sessionStorage.setItem('yb_academicYear',   classData.academicYear);
+          // Prima materia come default
+          if (classData.subjects.length) {
+            sessionStorage.setItem('yb_subjectId',   classData.subjects[0].subjectId);
+            sessionStorage.setItem('yb_subjectName', classData.subjects[0].subjectName);
+          }
+          selObClass(i);
+        };
+      })(idx, c);
+      container.appendChild(div);
+    });
+
+    // Seleziona automaticamente la prima
+    if (keys.length > 0) {
+      container.children[0].click();
+    }
+  })
+  .catch(function(err) {
+    console.warn('Assegnazioni non disponibili:', err);
+  });
+});
+
+function enterDashboard() {
+  var classGroupId = sessionStorage.getItem('yb_classGroupId');
+  if (!classGroupId) { alert('Seleziona una classe'); return; }
+  goTo('pages/docente/dashboard.html');
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="../../assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="pg-onboarding" class="pg auth on">
+  <div class="acard" style="width:560px;max-width:96vw;">
+    <div class="logo" style="margin-bottom:28px;">
+      <div class="logo-icon">⭐</div>
+      <div><div class="logo-txt">YOUR BEST</div><div class="logo-sub">PIATTAFORMA E-LEARNING</div></div>
+    </div>
+    <div class="ah1">Benvenuta, Giulia 👋</div>
+    <div class="ah2" style="margin-bottom:26px;">Seleziona la classe con cui vuoi lavorare oggi. Potrai cambiare in qualsiasi momento dalla sidebar.</div>
+    <div id="ob-classes" style="display:flex;flex-direction:column;gap:9px;margin-bottom:22px;">
+      <!-- Classe 1 — selezionata di default -->
+      <div class="ob-cls on" id="ob-0" onclick="selObClass(0)" style="padding:14px 16px;border-radius:12px;border:2px solid var(--blue);background:rgba(30,107,255,.18);display:flex;align-items:center;gap:13px;cursor:pointer;transition:.2s;">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1E6BFF,#4D8DFF);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">📐</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;color:#fff;">3ª A — Matematica</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;">5 studenti · Liceo Scientifico Einstein</div>
+        </div>
+        <div id="ob-chk-0" style="width:22px;height:22px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;flex-shrink:0;">✓</div>
+      </div>
+      <!-- Classe 2 -->
+      <div class="ob-cls" id="ob-1" onclick="selObClass(1)" style="padding:14px 16px;border-radius:12px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);display:flex;align-items:center;gap:13px;cursor:pointer;transition:.2s;">
+        <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#7C3AED,#6D28D9);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">📚</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;color:#fff;">4ª B — Filosofia</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.45);margin-top:2px;">22 studenti · Liceo Scientifico Einstein</div>
+        </div>
+        <div id="ob-chk-1" style="width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.2);flex-shrink:0;"></div>
+      </div>
+    </div>
+    <button class="abtn" style="margin-top:0;" onclick="enterDashboard()">Entra nella dashboard →</button>
+  </div>
+</div>
+
+</body></html>

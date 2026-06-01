@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Studio</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-stu" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcs">
+          <div class="rav rav-s">MR</div>
+          <div><div class="rname">Mario Rossi</div><div class="rsub">Liceo Einstein · 3A</div></div>
+          <span class="rbadge rbadge-s">STUDENTE</span>
+        </div>
+        <div class="cpill cpill-s" onclick="openMo('mo-mat')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div><span class="cpnm cpnm-s" id="s-mat-lbl">📐 Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on g" id="sn-home" onclick="sV('home')"><span class="nico">🏠</span>Home</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg g">
+          <div class="nis g" id="sn-studio" onclick="sV('studio')"><span class="nico">📚</span>Studio</div>
+          <div class="nis" id="sn-esercizi" onclick="sV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">3</span></div>
+          <div class="nis" id="sn-ripasso" onclick="sV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="sn-verifica" onclick="sV('verifica')"><span class="nico">📝</span>Verifica<span class="nbgr">Nuova</span></div>
+        </div>
+        <div class="nl" style="margin-top:4px;">Report</div>
+        <div class="ni g" id="sn-perf" onclick="sV('perf')"><span class="nico">📊</span>Le mie performance</div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="s-tit">Studio</div><div class="pgsub">20 Marzo 2026</div></div></div>
+      <div class="cnt" id="s-cnt"><div id="sv-studio" class="vw on">
+          <div class="ban-wrap">
+            <div class="ban ban-mat" id="s-mat-ban"><div class="ban-lbl" id="s-studio-mat-lbl">📐 Matematica</div></div>
+            <div class="ban ban-arg" id="s-arg-ban"><div class="ban-lbl" id="s-studio-arg-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-s-arg')">▾</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:218px 1fr;gap:12px;height:calc(100vh - 58px - 110px);">
+            <div class="tp" style="display:flex;flex-direction:column;">
+              <div class="tph"><div class="tpt">Lezioni — <span id="s-tree-sub">Eq. 2° grado</span></div></div>
+              <div style="flex:1;overflow-y:auto;padding:0;" id="s-les-tree">
+                <div style="padding:4px 10px 3px;font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;background:#F9FAFB;border-bottom:1px solid var(--bor);">Equazioni di 2° grado</div>
+                <div class="les-row-item active" id="s-ll-0" onclick="sSelLesson(0)"><div class="les-dot les-done">✅</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.1 — Introduzione</div><div style="font-size:10px;color:var(--mu);">12 gen · Completata</div></div></div>
+                <div class="les-row-item" id="s-ll-1" onclick="sSelLesson(1)"><div class="les-dot les-curr">🔵</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.2 — Il discriminante Δ</div><div style="font-size:10px;color:var(--mu);">19 gen · In corso</div></div></div>
+                <div class="les-row-item" id="s-ll-2" onclick="sSelLesson(2)" style="opacity:.6;"><div class="les-dot les-todo">⚪</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.3 — Formula completa</div><div style="font-size:10px;color:var(--mu);">26 gen · Da fare</div></div></div>
+                <div style="padding:4px 10px 3px;font-size:9px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;background:#F9FAFB;border-bottom:1px solid var(--bor);border-top:1px solid var(--bor);">Sistemi lineari</div>
+                <div style="display:flex;align-items:center;gap:7px;padding:8px 12px;border-bottom:1px solid var(--bor);opacity:.4;cursor:not-allowed;"><div class="les-dot les-lk">🔒</div><div style="flex:1;"><div style="font-size:11px;font-weight:600;">Lez.1 — Metodo sostituzione</div><div style="font-size:10px;color:var(--mu);">Bloccata</div></div></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div class="card">
+                <div class="ch"><span>📖</span><div style="flex:1;"><div class="ct" id="s-les-title">Lez.2 — Il discriminante Δ</div><div style="font-size:10px;color:var(--mu);">Prof. Carla Bianchi · 19 gen 2026</div></div><span class="tag ta mla" id="s-les-badge">In corso</span></div>
+                <div style="padding:10px 14px;">
+                  <div style="font-size:10px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Materiali — clicca per lavorarci con l'AI o scarica</div>
+                  <div id="s-docs-list">
+                    <div onclick="sSelDoc(this,'Cap.4 — Il discriminante.pdf')" style="display:flex;align-items:center;gap:7px;padding:6px 8px;border-bottom:1px solid var(--bor);font-size:11px;cursor:pointer;border-radius:6px;transition:.15s;" onmouseover="this.style.background='var(--sur)'" onmouseout="this.style.background=''">
+                      <div style="width:22px;height:22px;border-radius:5px;background:#FEE2E2;color:#991B1B;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">PDF</div><span style="flex:1;">Cap.4 — Il discriminante.pdf</span><span style="font-size:14px;cursor:pointer;" title="Scarica">⬇</span>
+                    </div>
+                    <div onclick="sSelDoc(this,'Slide Lez.2 — Il discriminante.pptx')" style="display:flex;align-items:center;gap:7px;padding:6px 8px;border-bottom:1px solid var(--bor);font-size:11px;cursor:pointer;border-radius:6px;transition:.15s;" onmouseover="this.style.background='var(--sur)'" onmouseout="this.style.background=''">
+                      <div style="width:22px;height:22px;border-radius:5px;background:#FFFBEB;color:#92400E;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">PPT</div><span style="flex:1;">Slide Lez.2 — Il discriminante.pptx</span><span style="font-size:14px;cursor:pointer;">⬇</span>
+                    </div>
+                    <div onclick="sSelDoc(this,'Video-lezione_discriminante.mp4')" style="display:flex;align-items:center;gap:7px;padding:6px 8px;font-size:11px;cursor:pointer;border-radius:6px;transition:.15s;" onmouseover="this.style.background='var(--sur)'" onmouseout="this.style.background=''">
+                      <div style="width:22px;height:22px;border-radius:5px;background:#D1FAE5;color:#065F46;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;">VID</div><span style="flex:1;">Video-lezione_discriminante.mp4</span><span style="font-size:12px;cursor:pointer;">▶️</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="aic" style="flex:1;min-height:320px;display:flex;flex-direction:column;">
+                <div class="ai-tabs">
+                  <div class="ai-tab on" id="s-tab-appr" onclick="stuSelTab('appr')">🔍 Approfondisci</div>
+                  <div class="ai-tab" id="s-tab-riass" onclick="stuSelTab('riass')">📄 Riassunto</div>
+                  <div class="ai-tab" id="s-tab-mappa" onclick="stuSelTab('mappa')">🗺 Mappa</div>
+                  <div class="ai-tab" id="s-tab-dom" onclick="stuSelTab('dom')">❓ Domande</div>
+                </div>
+                <div class="aich"><div class="aidot"></div><div style="flex:1;"><div class="ait" id="s-ai-title">Assistente AI — Approfondisci</div><div class="ais" id="s-ai-sub">Analisi approfondita del materiale</div></div><span class="tag ta mla" id="s-ai-tag">📐 Eq. 2° grado</span></div>
+                <div class="aimsgs" id="s-msgs-studio" style="flex:1;"><div class="msg bot">Ciao Mario! 👋 Sono pronto ad aiutarti con <strong>Il discriminante Δ</strong>. Ho studiato tutti i materiali della Prof. Bianchi. Seleziona un documento o chiedimi qualcosa!</div></div>
+                <div class="qrow" id="s-studio-qrow">
+                  <button class="qbtn" onclick="sSendStudio('Spiegami il discriminante passo per passo')">🎯 Spiegami</button>
+                  <button class="qbtn" onclick="sSendStudio('Esempio con x²-5x+6=0')">💡 Esempio</button>
+                  <button class="qbtn" onclick="sSendStudio('Cosa succede se Δ è negativo?')">❓ Δ negativo?</button>
+                </div>
+                <div class="ai-irow"><textarea class="ai-inp" id="s-inp-studio" rows="1" placeholder="Chiedi qualcosa sulla lezione..."></textarea><button class="ai-snd" id="s-snd-studio" onclick="sChatSend('studio')">➤</button></div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-stu" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">📢 Nuovi materiali</span><button class="popx">✕</button></div>
+    <div class="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div>
+  </div>
+</div>
+
+<div class="chat-mo" id="mo-chat-docente">
+  <div class="chat-box">
+    <div class="chat-hdr">
+      <div class="aidot" style="background:var(--green);"></div>
+<div class="mo" id="mo-s-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-s-ses">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Sessione esercizi</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("sn-studio");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

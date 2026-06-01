@@ -1,16 +1,55 @@
-# React + Vite
+# YOUR BEST — Struttura Progetto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Come aprire
+1. Decomprimi lo zip → apri la cartella `yb` in **VS Code**
+2. Tasto destro su `index.html` → **Open with Live Server**
+3. Oppure: `python3 -m http.server 3000` dalla cartella `yb`
 
-Currently, two official plugins are available:
+**Credenziali demo:**
+- Docente: `giulia.rossi@liceo.it`  
+- Studente: `mario.rossi@liceo.it`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Struttura
+```
+yb/
+├── index.html               ← Entry point (redirect a login)
+├── assets/
+│   ├── style.css            ← CSS globale (colori, layout, componenti)
+│   ├── data.js              ← Dati demo e risposte AI simulate
+│   ├── api.js               ← Connessione backend Spring Boot ← LAVORI QUI
+│   └── app.js               ← Navigazione e logica interazioni
+└── pages/
+    ├── auth/
+    │   ├── login.html       ← Login + Registrazione
+    │   └── onboarding.html  ← Selezione classe docente
+    ├── docente/
+    │   ├── dashboard.html
+    │   ├── programma.html
+    │   ├── crea-lezione.html
+    │   ├── esercizi.html    ← include anche dettaglio studente + report
+    │   ├── analisi.html
+    │   ├── verifica.html    ← include anche verifica studente
+    │   └── ripasso.html
+    └── studente/
+        ├── home.html
+        ├── studio.html
+        ├── esercizi.html
+        ├── ripasso.html
+        ├── verifica.html
+        └── performance.html
+```
 
-## React Compiler
+## Collegare Spring Boot (api.js)
+```javascript
+var BASE_URL = 'http://localhost:8080'; // ← il tuo URL
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+// Login reale:
+api.login(email, password).then(function(res) {
+  api.setToken(res.token);
+  // redirect in base a res.role
+});
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+// Chat AI reale:
+api.chat(conversationId, message, subjectId, topicId)
+  .then(function(res) { addMsg('s-msgs-studio', res.response, 'bot'); });
+```

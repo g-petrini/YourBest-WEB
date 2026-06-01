@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Ripasso</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-stu" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcs">
+          <div class="rav rav-s">MR</div>
+          <div><div class="rname">Mario Rossi</div><div class="rsub">Liceo Einstein · 3A</div></div>
+          <span class="rbadge rbadge-s">STUDENTE</span>
+        </div>
+        <div class="cpill cpill-s" onclick="openMo('mo-mat')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--green);"></div><span class="cpnm cpnm-s" id="s-mat-lbl">📐 Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on g" id="sn-home" onclick="sV('home')"><span class="nico">🏠</span>Home</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg g">
+          <div class="nis g" id="sn-studio" onclick="sV('studio')"><span class="nico">📚</span>Studio</div>
+          <div class="nis" id="sn-esercizi" onclick="sV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">3</span></div>
+          <div class="nis" id="sn-ripasso" onclick="sV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="sn-verifica" onclick="sV('verifica')"><span class="nico">📝</span>Verifica<span class="nbgr">Nuova</span></div>
+        </div>
+        <div class="nl" style="margin-top:4px;">Report</div>
+        <div class="ni g" id="sn-perf" onclick="sV('perf')"><span class="nico">📊</span>Le mie performance</div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="s-tit">Ripasso</div><div class="pgsub">20 Marzo 2026</div></div></div>
+      <div class="cnt" id="s-cnt"><div id="sv-ripasso" class="vw on">
+          <div class="ban-wrap">
+            <div class="ban ban-mat" id="s-rip-mat-ban"><div class="ban-lbl" id="s-rip-mat-lbl">📐 Matematica</div></div>
+            <div class="ban ban-arg" id="s-rip-arg-ban"><div class="ban-lbl" id="s-rip-arg-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-s-arg')">▾</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 250px;gap:12px;height:calc(100vh - 58px - 110px);">
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;">
+                <div class="kc" style="margin-bottom:0;"><div class="kico">✅</div><div class="kval">75%</div><div class="klbl">Esercizi corretti</div></div>
+                <div class="kc" style="margin-bottom:0;"><div class="kico">🔁</div><div class="kval">3.2</div><div class="klbl">Tentativi medi</div></div>
+                <div class="kc" style="margin-bottom:0;"><div class="kico">📚</div><div class="kval">2/3</div><div class="klbl">Lezioni studiate</div></div>
+              </div>
+              <div class="card">
+                <div class="ch"><span>📖</span><div class="ct">Avanzamento lezioni — Eq. 2° grado</div></div>
+                <div style="padding:0 14px;">
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bor);font-size:11px;"><div class="les-dot les-done">✅</div><span style="flex:1;">Lez.1 — Introduzione</span><span class="tag tg" style="font-size:9px;">Completata</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bor);font-size:11px;"><div class="les-dot les-curr">🔵</div><span style="flex:1;">Lez.2 — Il discriminante Δ</span><span class="tag ta" style="font-size:9px;">In corso</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bor);font-size:11px;opacity:.6;"><div class="les-dot les-todo">⚪</div><span style="flex:1;">Lez.3 — Formula completa</span><span class="tag tl" style="font-size:9px;">Da fare</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;padding:8px 0;font-size:11px;opacity:.4;"><div class="les-dot les-lk">🔒</div><span style="flex:1;color:#9CA3AF;">Lez.4 — Sistemi lineari</span><span class="tag tl" style="font-size:9px;">Bloccata</span></div>
+                </div>
+              </div>
+              <div class="aiins" style="border-radius:11px;padding:12px 14px;"><div class="aiinst">🤖 Consigli AI personalizzati</div><div class="aiinsb">Il tuo punto debole è il <strong>discriminante con c negativo</strong>. Prima della verifica del 25 marzo ti consiglio 5-10 esercizi mirati. Hai migliorato del 12% nell'ultimo mese!</div></div>
+              <div class="card"><div class="ch"><span>🎯</span><div class="ct">Aree critiche</div></div>
+                <div style="padding:0 14px;">
+                  <div style="display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--bor);font-size:11px;"><span>🔴</span><span style="flex:1;">Discriminante con c negativo</span><span class="tag te" style="font-size:9px;">Debole</span></div>
+                  <div style="display:flex;align-items:center;gap:7px;padding:7px 0;border-bottom:1px solid var(--bor);font-size:11px;"><span>🟡</span><span style="flex:1;">Calcolo di x₂ (seconda soluzione)</span><span class="tag tw" style="font-size:9px;">Medio</span></div>
+                  <div style="display:flex;align-items:center;gap:7px;padding:7px 0;font-size:11px;"><span>🟢</span><span style="flex:1;">Identificare i coefficienti a,b,c</span><span class="tag tg" style="font-size:9px;">Forte</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="aic" style="display:flex;flex-direction:column;">
+              <div class="ai-tabs">
+                <div class="ai-tab on" id="rip-tab-appr" onclick="ripSelTab('appr')">🔍</div>
+                <div class="ai-tab" id="rip-tab-riass" onclick="ripSelTab('riass')">📄</div>
+                <div class="ai-tab" id="rip-tab-mappa" onclick="ripSelTab('mappa')">🗺</div>
+                <div class="ai-tab" id="rip-tab-dom" onclick="ripSelTab('dom')">❓</div>
+              </div>
+              <div class="aich"><div class="aidot"></div><div><div class="ait" id="rip-ai-title">AI — Approfondisci</div><div class="ais" id="rip-ai-sub">Ripasso guidato personalizzato</div></div></div>
+              <div class="aimsgs" id="s-msgs-ripasso" style="flex:1;"><div class="msg bot">Ciao Mario! Il punto debole è il <strong>discriminante con c negativo</strong>. Vuoi simulare un'interrogazione o fare un quiz rapido?</div></div>
+              <div class="qrow" id="rip-qrow">
+                <button class="qbtn" onclick="sChat('ripasso','🎤 Simulazione interrogazione')">🎤 Interrogazione</button>
+                <button class="qbtn" onclick="sChat('ripasso','❓ Quiz rapido')">❓ Quiz</button>
+                <button class="qbtn" onclick="sChat('ripasso','📋 Schema riassuntivo')">📋 Schema</button>
+                <button class="qbtn" onclick="sChat('ripasso','📝 Simula verifica')">📝 Simula</button>
+              </div>
+              <div class="ai-irow"><textarea class="ai-inp" id="s-inp-ripasso" rows="1" placeholder="Chiedi di simulare o spiegare..."></textarea><button class="ai-snd" onclick="sChatSend('ripasso')">➤</button></div>
+            </div>
+          </div>
+        </div></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-stu" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">📢 Nuovi materiali</span><button class="popx">✕</button></div>
+    <div class="popbody">Prof. Bianchi ha caricato: <strong>Formula risolutiva completa</strong></div>
+  </div>
+</div>
+
+<div class="chat-mo" id="mo-chat-docente">
+  <div class="chat-box">
+    <div class="chat-hdr">
+      <div class="aidot" style="background:var(--green);"></div>
+<div class="mo" id="mo-s-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-s-ses">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Sessione esercizi</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("sn-ripasso");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

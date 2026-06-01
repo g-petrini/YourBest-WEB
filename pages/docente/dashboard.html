@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Dashboard</title>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var token          = sessionStorage.getItem('yb_token');
+  var name           = sessionStorage.getItem('yb_name') || 'Docente';
+  var initials       = sessionStorage.getItem('yb_initials') || '??';
+  var classGroupName = sessionStorage.getItem('yb_classGroupName') || '';
+  var subjectName    = sessionStorage.getItem('yb_subjectName') || '';
+  var academicYear   = sessionStorage.getItem('yb_academicYear') || '';
+
+  // Aggiorna nome docente nell'header
+  var rname = document.querySelector('.rname');
+  if (rname) rname.textContent = name;
+
+  var rav = document.querySelector('.rav-d');
+  if (rav) rav.textContent = initials;
+
+  // Aggiorna contesto classe/materia
+  var ctx = classGroupName + ' · ' + subjectName;
+  document.querySelectorAll('#d-ctx-lbl').forEach(function(el) {
+    el.textContent = ctx;
+  });
+
+  // Aggiorna il banner di benvenuto
+  var welcome = document.querySelector('[style*="Buongiorno"]');
+  if (welcome) {
+    var title = welcome.querySelector('[style*="font-size:19px"]');
+    if (title) title.textContent = 'Buongiorno, ' + name.split(' ')[0] + ' 👋';
+    var sub = welcome.querySelector('[style*="font-size:11px"]');
+    if (sub) sub.textContent = 'Classe ' + classGroupName + ' · ' + subjectName;
+  }
+
+  // Carica KPI della classe (topics attivi)
+  if (!token) return;
+  var classGroupId = sessionStorage.getItem('yb_classGroupId');
+  var subjectId    = sessionStorage.getItem('yb_subjectId');
+  if (!classGroupId || !subjectId) return;
+
+  fetch(BASE_URL_API + '/api/curriculum/classes/' + classGroupId + '/topics', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(topics) {
+    if (!topics || !topics.length) return;
+
+    // Mostra il topic attivo nel banner
+    var active = topics.find(function(t) { return t.active; }) || topics[0];
+    sessionStorage.setItem('yb_topicId',    active.id);
+    sessionStorage.setItem('yb_topicTitle', active.title);
+
+    var sub = document.querySelector('[style*="Argomento in corso"]');
+    if (sub) sub.textContent = 'Classe ' + classGroupName + ' · ' + subjectName + ' · Argomento in corso: ' + active.title;
+
+    // Aggiorna banner materia/argomento
+    var banMat = document.querySelector('.ban-mat .ban-lbl');
+    if (banMat) banMat.textContent = '📐 ' + subjectName;
+    var banArg = document.querySelector('.ban-arg .ban-lbl');
+    if (banArg) banArg.textContent = active.title;
+  })
+  .catch(function(err) {
+    console.warn('Topics non disponibili:', err);
+  });
+});
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-doc" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcd">
+          <div class="rav rav-d">GR</div>
+          <div><div class="rname">Giulia Rossi</div><div class="rsub">Liceo Einstein · Roma</div></div>
+          <span class="rbadge rbadge-d">DOCENTE</span>
+        </div>
+        <div class="cpill cpill-d" onclick="openMo('mo-ctx')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--blue);"></div><span class="cpnm cpnm-d" id="d-ctx-lbl">3A · Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on" id="dn-dash" onclick="dV('dash')"><span class="nico">🏠</span>Dashboard</div>
+        <div class="ni" id="dn-prog" onclick="dV('prog')"><span class="nico">📋</span>Programma didattico</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg">
+          <div class="nis" id="dn-studio" onclick="dV('studio')"><span class="nico">📝</span>Crea una Lezione</div>
+          <div class="nis" id="dn-esercizi" onclick="dV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">5</span></div>
+          <div class="nis" id="dn-analisi" onclick="dV('analisi')"><span class="nico">📊</span>Analisi Classe</div>
+          <div class="nis" id="dn-ripasso" onclick="dV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="dn-verifica" onclick="dV('verifica')"><span class="nico">📝</span>Verifica<span class="nbr">2</span></div>
+        </div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="d-tit">Dashboard</div><div class="pgsub" id="d-ctx-lbl">3A · Matematica</div></div></div>
+      <div class="cnt" id="d-cnt"><div id="dv-dash" class="vw on">
+          <div style="background:linear-gradient(135deg,var(--navy),#1A3A5C);border-radius:13px;padding:18px 22px;margin-bottom:13px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;">
+            <div style="position:absolute;right:-10px;top:-10px;width:110px;height:110px;border-radius:50%;background:rgba(30,107,255,.12);"></div>
+            <div><div style="font-family:'Clash Display',sans-serif;font-size:19px;color:#fff;margin-bottom:2px;">Buongiorno, Giulia 👋</div><div style="font-size:11px;color:rgba(255,255,255,.42);">Classe 3A · Matematica · Argomento in corso: Equazioni di 2° grado</div></div>
+            <div style="font-size:34px;position:relative;z-index:1;">🏫</div>
+          </div>
+          <div class="ban-wrap"><div class="ban ban-mat"><div class="ban-lbl">📐 Matematica</div><div class="ban-btn" onclick="openMo('mo-d-mat')">▾</div></div><div class="ban ban-arg"><div class="ban-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-d-arg')">▾</div></div></div>
+          <div class="krow">
+            <div class="kc"><div class="kico">👨‍🎓</div><div class="kval">5</div><div class="klbl">Studenti attivi</div><div class="kdelta up">tutti presenti</div></div>
+            <div class="kc"><div class="kico">✏️</div><div class="kval">68%</div><div class="klbl">Completamento esercizi</div><div class="kdelta wa">1 in ritardo</div></div>
+            <div class="kc"><div class="kico">🎯</div><div class="kval">74%</div><div class="klbl">Autonomia media</div><div class="kdelta up">↑ vs prec.</div></div>
+            <div class="kc"><div class="kico">⚠️</div><div class="kval">3</div><div class="klbl">Lacune: discriminante</div><div class="kdelta dn">richiede attenzione</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:13px;">
+            <div style="background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:11px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:#92400E;margin-bottom:7px;">✏️ Da fare — Esercizi</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><span><strong>5 esercizi</strong> da rivedere su Eq. 2° grado</span></div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><span><strong>Marco G.</strong> ha richiesto feedback</span></div>
+              <div style="font-size:11px;padding:4px 0;display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:3px;"></span><span><strong>Anna V.</strong> in ritardo — scad. ieri</span></div>
+            </div>
+            <div style="background:#FEE2E2;border:1.5px solid #FCA5A5;border-radius:11px;padding:12px 14px;">
+              <div style="font-size:11px;font-weight:700;color:#991B1B;margin-bottom:7px;">📝 Da fare — Verifiche</div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;"></span><span><strong>Verifica Eq. e Sistemi</strong> — 5 elaborati</span></div>
+              <div style="font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.05);display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;"></span><span>Scadenza voti: <strong>25/03</strong></span></div>
+              <div style="font-size:11px;padding:4px 0;display:flex;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:3px;"></span><span>Report di classe da generare</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ch"><span style="font-size:14px;">💬</span><div class="ct">Messaggi dalla classe — 3A</div><button class="btns mla">Vedi tutti</button></div>
+            <div style="padding:0 14px;">
+              <div class="srow"><div style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div><div class="sav ay">MG</div><div style="flex:1;"><div style="font-size:11px;font-weight:700;">Marco Galli</div><div style="font-size:10px;color:var(--mu);">Non capisco il passaggio b²−4ac, può spiegarmelo?</div></div><div style="font-size:10px;color:var(--mu);">14:22</div></div>
+              <div class="srow"><div style="width:7px;height:7px;border-radius:50%;background:var(--blue);flex-shrink:0;"></div><div class="sav ab">SF</div><div style="flex:1;"><div style="font-size:11px;font-weight:700;">Sara Ferri</div><div style="font-size:10px;color:var(--mu);">Ho finito l'esercizio 2, posso avere un feedback?</div></div><div style="font-size:10px;color:var(--mu);">ieri</div></div>
+              <div class="srow" style="border:none;"><div style="width:7px;height:7px;border-radius:50%;background:transparent;flex-shrink:0;"></div><div class="sav ar">AV</div><div style="flex:1;"><div style="font-size:11px;font-weight:700;">Anna Vitale</div><div style="font-size:10px;color:var(--mu);">Sono assente domani, posso consegnare in ritardo?</div></div><div style="font-size:10px;color:var(--mu);">ieri</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROGRAMMA --></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-doc" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">🤖 Analisi AI disponibile</span><button class="popx">✕</button></div>
+    <div class="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div>
+  </div>
+</div>
+
+<div class="mo" id="mo-ctx"><div class="mbox"><div class="mt">Cambia classe</div>
+<div class="mo" id="mo-arg"><div class="mbox"><div class="mt">Seleziona argomento</div>
+<div class="mo" id="mo-new-arg"><div class="mbox"><div class="mt">Nuovo argomento</div>
+<div class="mo" id="mo-new-les"><div class="mbox"><div class="mt">Aggiungi lezione</div>
+<div class="mo" id="mo-new-es"><div class="mbox w"><div class="mt">Nuovo esercizio</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-mat"><div class="mbox"><div class="mt">Seleziona materia</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+<div class="mo" id="mo-d-mat">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona materia</div>
+<div class="mo" id="mo-d-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-d-sub">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona sotto-argomento</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("dn-dash");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>

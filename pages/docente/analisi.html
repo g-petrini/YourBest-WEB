@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>YOUR BEST — Analisi Classe</title>
+<script>
+(function(){
+  var p = window.location.pathname;
+  var root = p.indexOf('/pages/') !== -1
+    ? p.substring(0, p.indexOf('/pages/'))
+    : p.substring(0, p.lastIndexOf('/'));
+  if(!root) root = '/';
+  if(!root.endsWith('/')) root += '/';
+  var b = document.createElement('base');
+  b.href = window.location.origin + root;
+  document.head.insertBefore(b, document.head.firstChild);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="assets/style.css">
+<style>html,body{height:100%;overflow:hidden;}</style>
+</head>
+<body>
+<div id="rsw">
+  <button class="rb" id="rbd" onclick="switchRole('doc')">👨‍🏫 Docente</button>
+  <button class="rb" id="rbs" onclick="switchRole('stu')">👨‍🎓 Studente</button>
+</div>
+
+<div id="pg-doc" class="pg on">
+  <div class="shell">
+    <nav class="sb">
+      <div class="sb-top">
+        <div class="sb-logo"><div class="sb-li">⭐</div><div class="sb-lt">YOUR BEST</div></div>
+        <div class="rcard rcd">
+          <div class="rav rav-d">GR</div>
+          <div><div class="rname">Giulia Rossi</div><div class="rsub">Liceo Einstein · Roma</div></div>
+          <span class="rbadge rbadge-d">DOCENTE</span>
+        </div>
+        <div class="cpill cpill-d" onclick="openMo('mo-ctx')">
+          <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:var(--blue);"></div><span class="cpnm cpnm-d" id="d-ctx-lbl">3A · Matematica</span></div>
+          <span class="cpa">cambia ▾</span>
+        </div>
+      </div>
+      <div class="sb-nav">
+        <div class="nl">Panoramica</div>
+        <div class="ni on" id="dn-dash" onclick="dV('dash')"><span class="nico">🏠</span>Dashboard</div>
+        <div class="ni" id="dn-prog" onclick="dV('prog')"><span class="nico">📋</span>Programma didattico</div>
+        <div class="nl" style="margin-top:4px;">Sezioni</div>
+        <div class="sg">
+          <div class="nis" id="dn-studio" onclick="dV('studio')"><span class="nico">📝</span>Crea una Lezione</div>
+          <div class="nis" id="dn-esercizi" onclick="dV('esercizi')"><span class="nico">✏️</span>Esercizi<span class="nbg">5</span></div>
+          <div class="nis" id="dn-analisi" onclick="dV('analisi')"><span class="nico">📊</span>Analisi Classe</div>
+          <div class="nis" id="dn-ripasso" onclick="dV('ripasso')"><span class="nico">🔄</span>Ripasso</div>
+          <div class="nis" id="dn-verifica" onclick="dV('verifica')"><span class="nico">📝</span>Verifica<span class="nbr">2</span></div>
+        </div>
+      </div>
+      <div class="sb-foot"><button class="nbt">🔔<div class="nbtd"></div></button><button class="logbtn" onclick="showPage('pg-login')">↩ Esci</button></div>
+    </nav>
+    <div class="main">
+      <div class="tb"><div><div class="pgtit" id="d-tit">Analisi Classe</div><div class="pgsub" id="d-ctx-lbl">3A · Matematica</div></div></div>
+      <div class="cnt" id="d-cnt"><div id="dv-analisi" class="vw on">
+          <div class="ban-wrap"><div class="ban ban-mat" id="d-an-mat-ban"><div class="ban-lbl" id="d-an-mat-lbl">📐 Matematica</div><div class="ban-btn" onclick="openMo('mo-d-mat')">▾</div></div><div class="ban ban-arg" id="d-an-arg-ban"><div class="ban-lbl" id="d-an-arg-lbl">Equazioni e sistemi</div><div class="ban-btn" onclick="openMo('mo-d-arg')">▾</div></div></div>
+          <div class="krow">
+            <div class="kc"><div class="kico">📈</div><div class="kval">73%</div><div class="klbl">Completamento medio</div><div class="kdelta up">↑ vs prec.</div></div>
+            <div class="kc"><div class="kico">🔁</div><div class="kval">3.2</div><div class="klbl">Tentativi medi</div><div class="kdelta wa">leggermente alto</div></div>
+            <div class="kc"><div class="kico">🤖</div><div class="kval">71%</div><div class="klbl">Autonomia media</div><div class="kdelta up">↑ dal mese scorso</div></div>
+            <div class="kc"><div class="kico">⚠️</div><div class="kval">3</div><div class="klbl">Con lacune</div><div class="kdelta dn">discriminante</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 240px;gap:12px;height:calc(100vh - 58px - 192px);overflow-y:auto;">
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div class="aiins" style="border-radius:11px;padding:11px 13px;"><div class="aiinst">🤖 Insight AI — Settimana corrente</div><div class="aiinsb">3 su 5 studenti hanno difficoltà ricorrenti sul <strong>calcolo del discriminante al punto b)</strong>. Marco G. e Anna V. in peggioramento. Consigliata lezione di rinforzo prima del 25 marzo.</div><div style="display:flex;gap:5px;margin-top:7px;"><button class="btna" style="font-size:10px;" onclick="dV('studio')">💡 Aggiungi materiale</button><button class="btns" style="font-size:10px;">📩 Contatta studenti</button></div></div>
+              <div class="card">
+                <div class="ch"><span>👥</span><div class="ct">Performance studenti</div><button class="btns mla">Esporta</button></div>
+                <div style="padding:0 14px;">
+                  <div class="srow"><div class="sav ag">LM</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Luca Marini</div><div style="font-size:10px;color:var(--mu);">5 esercizi · 2 aiuti</div></div><div class="sbar" style="width:75px;"><div class="sbf" style="width:94%;background:#059669;"></div></div><span class="spct">94%</span><span class="tag tg" style="flex-shrink:0;margin-left:7px;">Ottimo</span></div>
+                  <div class="srow"><div class="sav ab">SF</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Sara Ferri</div><div style="font-size:10px;color:var(--mu);">5 esercizi · 4 aiuti</div></div><div class="sbar" style="width:75px;"><div class="sbf" style="width:78%;background:#1E6BFF;"></div></div><span class="spct">78%</span><span class="tag ta" style="flex-shrink:0;margin-left:7px;">Buono</span></div>
+                  <div class="srow"><div class="sav ap">PL</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Pietro Leone</div><div style="font-size:10px;color:var(--mu);">4 esercizi · 5 aiuti</div></div><div class="sbar" style="width:75px;"><div class="sbf" style="width:65%;background:#8B5CF6;"></div></div><span class="spct">65%</span><span class="tag ta" style="flex-shrink:0;margin-left:7px;">Buono</span></div>
+                  <div class="srow"><div class="sav ay">MG</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Marco Galli</div><div style="font-size:10px;color:var(--mu);">3 esercizi · 8 aiuti</div></div><div class="sbar" style="width:75px;"><div class="sbf" style="width:51%;background:#F59E0B;"></div></div><span class="spct">51%</span><span class="tag tw" style="flex-shrink:0;margin-left:7px;">Attenzione</span></div>
+                  <div class="srow" style="border:none;"><div class="sav ar">AV</div><div style="flex:1;"><div style="font-size:12px;font-weight:600;">Anna Vitale</div><div style="font-size:10px;color:var(--mu);">1 esercizio · inattiva</div></div><div class="sbar" style="width:75px;"><div class="sbf" style="width:15%;background:#DC2626;"></div></div><span class="spct">15%</span><span class="tag te" style="flex-shrink:0;margin-left:7px;">Critico</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:11px;overflow-y:auto;">
+              <div class="card" style="padding:12px;"><div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:9px;">🏷 Tipologia errori</div><canvas id="ac-pie" height="130"></canvas></div>
+              <div class="card" style="padding:12px;"><div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:8px;">📈 Autonomia</div><canvas id="ac-line" height="110"></canvas></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VERIFICA DOC --></div>
+    </div>
+  </div>
+  <div class="popup" id="pop-doc" onclick="this.classList.add('off')">
+    <div class="poptop"><span class="poptit">🤖 Analisi AI disponibile</span><button class="popx">✕</button></div>
+    <div class="popbody">Marco Galli ha completato l'esercizio 2. Rilevati errori concettuali.</div>
+  </div>
+</div>
+
+<div class="mo" id="mo-ctx"><div class="mbox"><div class="mt">Cambia classe</div>
+<div class="mo" id="mo-arg"><div class="mbox"><div class="mt">Seleziona argomento</div>
+<div class="mo" id="mo-new-arg"><div class="mbox"><div class="mt">Nuovo argomento</div>
+<div class="mo" id="mo-new-les"><div class="mbox"><div class="mt">Aggiungi lezione</div>
+<div class="mo" id="mo-new-es"><div class="mbox w"><div class="mt">Nuovo esercizio</div>
+<div class="mo" id="mo-formula"><div class="mbox"><div class="mt">∑ Editor Formule — LaTeX</div>
+<div class="mo" id="mo-mat"><div class="mbox"><div class="mt">Seleziona materia</div>
+<div class="mo" id="mo-consegna"><div class="mbox" style="text-align:center;"><div style="font-size:36px;margin-bottom:9px;">📝</div>
+<div class="mo" id="mo-d-mat">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona materia</div>
+<div class="mo" id="mo-d-arg">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona argomento</div>
+<div class="mo" id="mo-d-sub">
+  <div class="mbox">
+    <div class="mt" style="font-family:'Clash Display',sans-serif;font-size:15px;color:var(--navy);margin-bottom:4px;">Seleziona sotto-argomento</div>
+
+<script>document.addEventListener("DOMContentLoaded",function(){highlightNav("dn-analisi");});</script>
+<script src="assets/data.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/app.js"></script>
+</body></html>
